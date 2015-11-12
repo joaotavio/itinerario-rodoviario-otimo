@@ -1,0 +1,17 @@
+%dados_via(cod, orig, dest, dist, caracter(piso, pedagio, velmedia)).
+
+%Mandaguari
+dados_via(1, 'Mandaguari', 'Maringa', 35, carecteristicas(4, 5, 120)).
+dados_via(2, 'Mandaguari', 'Marialva', 12, carecteristicas(4, 5, 110)).
+dados_via(3, 'Mandaguari', 'Jandaia', 8, carecteristicas(3, 0, 90)).
+dados_via(4, 'Mandaguari', 'Londrina', 72, carecteristicas(4, 5, 110)).
+
+%Maringa
+dados_via(5, 'Maringa', 'Londrina', 100, carecteristicas(4, 10, 80)).
+dados_via(6, 'Maringa', 'Marialva', 22, carecteristicas(3, 0, 90)).
+dados_via(7, 'Maringa', 'Sarandi', 10, carecteristicas(3, 0, 75)).
+dados_via(8, 'Maringa', 'Curitiba', 420, carecteristicas(3, 30, 100)).
+
+itinerario(Origem, Destino) :-
+	dados_via(_, Origem, Destino, _, _);
+	dados_via(_, Destino, Origem, _, _).
