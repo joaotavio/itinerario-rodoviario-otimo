@@ -115,7 +115,7 @@ obter_reta(Origem, Destino, Reta):-
 
 pede_origem(X) :-
 	write('Digite a origem: '),
-	read(X), nl, !.
+	read(X), nl.
 
 pede_destino(Y) :-
 	write('Digite o Destino: '),

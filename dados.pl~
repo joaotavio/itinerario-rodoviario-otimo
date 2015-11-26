@@ -117,14 +117,14 @@ pede_origem(X) :-
 	write('Digite a origem: '),
 	read(X), nl, !.
 
-pede_destino() :-
-	write('Digite o Destino: ').
-	%read(Y).
+pede_destino(Y) :-
+	write('Digite o Destino: '),
+	read(Y).
 
 pede():-
 	pede_origem(X),
-	pede_destino(),
-	encontrarCaminho(X, 'Mandaguari').
+	pede_destino(Y),
+	encontrarCaminho(X, Y).
 
 %Busca o menor caminho
 encontrarCaminho(Origem, Destino):-
