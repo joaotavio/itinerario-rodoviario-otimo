@@ -21,74 +21,305 @@ cidade(18, 'Umuarama').
 cidade(19, 'Ponta Grossa').
 cidade(20, 'Curitiba').
 
-reta(1, 1, 0).
-reta(2, 1, 10).
-reta(3, 1, 11).
-reta(4, 1, 20).
-reta(5, 1, 27).
-reta(6, 1, 13).
-reta(7, 1, 23).
-reta(8, 1, 28).
-reta(9, 1, 49).
-reta(10, 1, 57).
-reta(11, 1, 92).
-reta(12, 1, 91).
-reta(13, 1, 248).
-reta(14, 1, 317).
-reta(15, 1, 209).
-reta(16, 1, 241).
-reta(17, 1, 30).
-reta(18, 1, 168).
-reta(19, 1, 234).
-reta(20, 1, 324).
+%Reta de X -> Mandaguari.
+reta('Mandaguari', 'Mandaguari', 0).
+reta('Jandaia', 'Mandaguari', 10).
+reta('Marialva', 'Mandaguari', 11).
+reta('Sarandi', 'Mandaguari', 20).
+reta('Maringa', 'Mandaguari', 27).
+reta('Cambira', 'Mandaguari', 13).
+reta('Apucarana', 'Mandaguari', 23).
+reta('Arapongas', 'Mandaguari', 28).
+reta('Cambe', 'Mandaguari', 49).
+reta('Londrina', 'Mandaguari', 57).
+reta('Paranavai', 'Mandaguari', 92).
+reta('Campo Mourao', 'Mandaguari', 91).
+reta('Toledo', 'Mandaguari', 248).
+reta('Pato Branco', 'Mandaguari', 317).
+reta('Guarapuava', 'Mandaguari', 209).
+reta('Cascavel', 'Mandaguari', 241).
+reta('Astorga', 'Mandaguari', 30).
+reta('Umuarama', 'Mandaguari', 168).
+reta('Ponta Grossa', 'Mandaguari', 234).
+reta('Curitiba', 'Mandaguari', 324).
 
-distancia(1, 2, 11).
-distancia(2, 6, 16).
-distancia(6, 7, 16).
-distancia(7, 8, 17).
-distancia(1, 8, 37).
-distancia(8, 9, 24).
-distancia(9, 10, 13).
-distancia(9, 17, 52).
-distancia(17, 5, 52).
-distancia(5, 11, 74).
-distancia(5, 4, 7).
-distancia(4, 3, 10).
-distancia(3, 1, 11).
-distancia(7, 19, 251).
-distancia(5, 18, 165).
-distancia(5, 12, 91).
-distancia(12, 13, 220).
-distancia(18, 13, 130).
-distancia(13, 16, 45).
-distancia(16, 14, 234).
-distancia(14, 15, 187).
-distancia(15, 19, 163).
-distancia(19, 20, 116).
+%Reta X -> Jandaia
+reta('Jandaia', 'Jandaia', 0).
+reta('Marialva', 'Jandaia', 20).
+reta('Sarandi', 'Jandaia', 30).
+reta('Maringa', 'Jandaia', 36).
+reta('Cambira', 'Jandaia', 6).
+reta('Apucarana', 'Jandaia', 19).
+reta('Arapongas', 'Jandaia', 30).
+reta('Cambe', 'Jandaia', 51).
+reta('Londrina', 'Jandaia', 58).
+reta('Paranavai', 'Jandaia', 102).
+reta('Campo Mourao', 'Jandaia', 90).
+reta('Toledo', 'Jandaia', 248).
+reta('Pato Branco', 'Jandaia', 311).
+reta('Guarapuava', 'Jandaia', 200).
+reta('Cascavel', 'Jandaia', 239).
+reta('Astorga', 'Jandaia', 40).
+reta('Umuarama', 'Jandaia', 172).
+reta('Ponta Grossa', 'Jandaia', 224).
+reta('Curitiba', 'Jandaia', 315).
 
-dados_via(1, 1, 2, 11, caracteristicas(4, 0, 80)).    %Mandaguari-Jandaia
-dados_via(2, 2, 6, 16, caracteristicas(2, 0, 70)).     %Jandaia-Cambira
-dados_via(3, 6, 7, 16, caracteristicas(1, 0, 50)).     %Cambira-Apucarana
-dados_via(4, 7, 8, 17, caracteristicas(3, 0, 70)).	   %Apucarana-Arapongas
-dados_via(5, 1, 8, 37, caracteristicas(3, 0, 85)).     %Mandaguari-Arapongas
-dados_via(6, 8, 9, 24, caracteristicas(3, 0, 80)).     %Arapongas-Cambe
-dados_via(7, 9, 10, 13, caracteristicas(4, 8, 70)).    %Cambe-Londrina
-dados_via(8, 9, 17, 52, caracteristicas(2, 5, 75)).	   %Cambe-Astorga
-dados_via(9, 17, 5, 52, caracteristicas(3, 0, 100)).    %Astorga-Maringa
-dados_via(10, 5, 11, 74, caracteristicas(3, 0, 90)).   %Maringa-Paranavai
-dados_via(11, 5, 4, 7, caracteristicas(3, 0, 65)).     %Maringa-Sarandi
-dados_via(12, 4, 3, 10, caracteristicas(3, 0, 90)).    %Sarandi-Marialva
-dados_via(13, 3, 1, 11, caracteristicas(4, 7, 100)).    %Marialva-Mandaguari
-dados_via(14, 7, 19, 251, caracteristicas(2, 0, 70)).  %Apucarana-Ponta Grossa
-dados_via(15, 5, 18, 165, caracteristicas(3, 0, 82)).  %Maringa-Umuarama
-dados_via(16, 5, 12, 91, caracteristicas(3, 10, 80)).   %Maringa-Campo Mourao
-dados_via(17, 12, 13, 220, caracteristicas(1, 5, 88)). %Campo Mourao-Toledo
-dados_via(18, 18, 13, 130, caracteristicas(1, 0, 100)). %Umuarama-Toledo
-dados_via(19, 13, 16, 45, caracteristicas(3, 5, 95)).  %Toledo-Cascavel
-dados_via(20, 16, 14, 234, caracteristicas(5, 10, 110)). %Cascavel-Pato Branco
-dados_via(21, 14, 15, 187, caracteristicas(4, 8, 99)). %Pato Branco-Guarapuava
-dados_via(22, 15, 19, 163, caracteristicas(3, 5, 80)). %Guarapuava-Ponta Grossa
-dados_via(23, 19, 20, 116, caracteristicas(4, 8, 85)). %Ponta Grossa-Curitiba
+%Reta X -> Marialva
+reta('Marialva', 'Marialva', 0).
+reta('Sarandi', 'Marialva', 10).
+reta('Maringa', 'Marialva', 16).
+reta('Cambira', 'Marialva', 25).
+reta('Apucarana', 'Marialva', 34).
+reta('Arapongas', 'Marialva', 38).
+reta('Cambe', 'Marialva', 57).
+reta('Londrina', 'Marialva', 67).
+reta('Paranavai', 'Marialva', 82).
+reta('Campo Mourao', 'Marialva', 86).
+reta('Toledo', 'Marialva', 241).
+reta('Pato Branco', 'Marialva', 318).
+reta('Guarapuava', 'Marialva', 215).
+reta('Cascavel', 'Marialva', 236).
+reta('Astorga', 'Marialva', 30).
+reta('Umuarama', 'Marialva', 159).
+reta('Ponta Grossa', 'Marialva', 245).
+reta('Curitiba', 'Marialva', 336).
+
+%Reta X -> Sarandi
+reta('Sarandi', 'Sarandi', 0).
+reta('Maringa', 'Sarandi', 6).
+reta('Cambira', 'Sarandi', 34).
+reta('Apucarana', 'Sarandi', 44).
+reta('Arapongas', 'Sarandi', 46).
+reta('Cambe', 'Sarandi', 64).
+reta('Londrina', 'Sarandi', 74).
+reta('Paranavai', 'Sarandi', 72).
+reta('Campo Mourao', 'Sarandi', 84).
+reta('Toledo', 'Sarandi', 237).
+reta('Pato Branco', 'Sarandi', 320).
+reta('Guarapuava', 'Sarandi', 221).
+reta('Cascavel', 'Sarandi', 233).
+reta('Astorga', 'Sarandi', 31).
+reta('Umuarama', 'Sarandi', 152).
+reta('Ponta Grossa', 'Sarandi', 254).
+reta('Curitiba', 'Sarandi', 345).
+
+
+%Reta X -> Maringa
+reta('Maringa', 'Maringa', 0).
+reta('Cambira', 'Maringa', 41).
+reta('Apucarana', 'Maringa', 50).
+reta('Arapongas', 'Maringa', 52).
+reta('Cambe', 'Maringa', 69).
+reta('Londrina', 'Maringa', 79).
+reta('Paranavai', 'Maringa', 66).
+reta('Campo Mourao', 'Maringa', 83).
+reta('Toledo', 'Maringa', 234).
+reta('Pato Branco', 'Maringa', 321).
+reta('Guarapuava', 'Maringa', 224).
+reta('Cascavel', 'Maringa', 231).
+reta('Astorga', 'Maringa', 34).
+reta('Umuarama', 'Maringa', 147).
+reta('Ponta Grossa', 'Maringa', 260).
+reta('Curitiba', 'Maringa', 351).
+
+%Reta X -> Cambira
+reta('Cambira', 'Cambira', 0).
+reta('Apucarana', 'Cambira', 13).
+reta('Arapongas', 'Cambira', 25).
+reta('Cambe', 'Cambira', 46).
+reta('Londrina', 'Cambira', 53).
+reta('Paranavai', 'Cambira', 106).
+reta('Campo Mourao', 'Cambira', 96).
+reta('Toledo', 'Cambira', 254).
+reta('Pato Branco', 'Cambira', 314).
+reta('Guarapuava', 'Cambira', 201).
+reta('Cascavel', 'Cambira', 244).
+reta('Astorga', 'Cambira', 40).
+reta('Umuarama', 'Cambira', 179).
+reta('Ponta Grossa', 'Cambira', 221).
+reta('Curitiba', 'Cambira', 311).
+
+%Reta X -> Apucarana
+reta('Apucarana', 'Apucarana', 0).
+reta('Arapongas', 'Apucarana', 15).
+reta('Cambe', 'Apucarana', 36).
+reta('Londrina', 'Apucarana', 41).
+reta('Paranavai', 'Apucarana', 115).
+reta('Campo Mourao', 'Apucarana', 108).
+reta('Toledo', 'Apucarana', 266).
+reta('Pato Branco', 'Apucarana', 322).
+reta('Guarapuava', 'Apucarana', 205).
+reta('Cascavel', 'Apucarana', 256).
+reta('Astorga', 'Apucarana', 40).
+reta('Umuarama', 'Apucarana', 191).
+reta('Ponta Grossa', 'Apucarana', 217).
+reta('Curitiba', 'Apucarana', 305).
+
+%Reta X -> Arapongas
+reta('Arapongas', 'Arapongas', 0).
+reta('Cambe', 'Arapongas', 21).
+reta('Londrina', 'Arapongas', 29).
+reta('Paranavai', 'Arapongas', 112).
+reta('Campo Mourao', 'Arapongas', 120).
+reta('Toledo', 'Arapongas', 277).
+reta('Pato Branco', 'Arapongas', 338).
+reta('Guarapuava', 'Arapongas', 220).
+reta('Cascavel', 'Arapongas', 268).
+reta('Astorga', 'Arapongas', 31).
+reta('Umuarama', 'Arapongas', 197).
+reta('Ponta Grossa', 'Arapongas', 227).
+reta('Curitiba', 'Arapongas', 313).
+
+%Reta X -> Cambe
+reta('Cambe', 'Cambe', 0).
+reta('Londrina', 'Cambe', 12).
+reta('Paranavai', 'Cambe', 123).
+reta('Campo Mourao', 'Cambe', 141).
+reta('Toledo', 'Cambe', 298).
+reta('Pato Branco', 'Cambe', 357).
+reta('Guarapuava', 'Cambe', 236).
+reta('Cascavel', 'Cambe', 290).
+reta('Astorga', 'Cambe', 39).
+reta('Umuarama', 'Cambe', 215).
+reta('Ponta Grossa', 'Cambe', 233).
+reta('Curitiba', 'Cambe', 315).
+
+%Reta X -> Londrina
+reta('Londrina', 'Londrina', 0).
+reta('Paranavai', 'Londrina', 135).
+reta('Campo Mourao', 'Londrina', 148).
+reta('Toledo', 'Londrina', 306).
+reta('Pato Branco', 'Londrina', 359).
+reta('Guarapuava', 'Londrina', 234).
+reta('Cascavel', 'Londrina', 297).
+reta('Astorga', 'Londrina', 51).
+reta('Umuarama', 'Londrina', 225).
+reta('Ponta Grossa', 'Londrina', 225).
+reta('Curitiba', 'Londrina', 305).
+
+%Reta X -> Paranavai
+reta('Paranavai', 'Paranavai', 0).
+reta('Campo Mourao', 'Paranavai', 107).
+reta('Toledo', 'Paranavai', 225).
+reta('Pato Branco', 'Paranavai', 351).
+reta('Guarapuava', 'Paranavai', 276).
+reta('Cascavel', 'Paranavai', 232).
+reta('Astorga', 'Paranavai', 84).
+reta('Umuarama', 'Paranavai', 116).
+reta('Ponta Grossa', 'Paranavai', 324).
+reta('Curitiba', 'Paranavai', 416).
+
+%Reta X -> Campo Mourao
+reta('Campo Mourao', 'Campo Mourao', 0).
+reta('Toledo', 'Campo Mourao', 158).
+reta('Pato Branco', 'Campo Mourao', 245).
+reta('Guarapuava', 'Campo Mourao', 176).
+reta('Cascavel', 'Campo Mourao', 150).
+reta('Astorga', 'Campo Mourao', 115).
+reta('Umuarama', 'Campo Mourao', 101).
+reta('Ponta Grossa', 'Campo Mourao', 254).
+reta('Curitiba', 'Campo Mourao', 350).
+
+%Reta X -> Toledo
+reta('Toledo', 'Toledo', 0).
+reta('Pato Branco', 'Toledo', 199).
+reta('Guarapuava', 'Toledo', 241).
+reta('Cascavel', 'Toledo', 39).
+reta('Astorga', 'Toledo', 268).
+reta('Umuarama', 'Toledo', 114).
+reta('Ponta Grossa', 'Toledo', 364).
+reta('Curitiba', 'Toledo', 458).
+
+%Reta X -> Pato Branco
+reta('Pato Branco', 'Pato Branco', 0).
+reta('Guarapuava', 'Pato Branco', 153).
+reta('Cascavel', 'Pato Branco', 162).
+reta('Astorga', 'Pato Branco', 348).
+reta('Umuarama', 'Pato Branco', 282).
+reta('Ponta Grossa', 'Pato Branco', 282).
+reta('Curitiba', 'Pato Branco', 353).
+
+%Reta X -> Guarapuava
+reta('Guarapuava', 'Guarapuava', 0).
+reta('Cascavel', 'Guarapuava', 207).
+reta('Astorga', 'Guarapuava', 240).
+reta('Umuarama', 'Guarapuava', 261).
+reta('Ponta Grossa', 'Guarapuava', 135).
+reta('Curitiba', 'Guarapuava', 221).
+
+%Reta X -> Cascavel
+reta('Cascavel', 'Cascavel', 0).
+reta('Astorga', 'Cascavel', 264).
+reta('Umuarama', 'Cascavel', 133).
+reta('Ponta Grossa', 'Cascavel', 406).
+reta('Curitiba', 'Cascavel', 425).
+
+%Reta X -> Astorga
+reta('Astorga', 'Astorga', 0).
+reta('Umuarama', 'Astorga', 179).
+reta('Ponta Grossa', 'Astorga', 257).
+reta('Curitiba', 'Astorga', 344).
+
+%Reta X -> Umuarama
+reta('Umuarama', 'Umuarama', 0).
+reta('Ponta Grossa', 'Umuarama', 353).
+reta('Curitiba', 'Umuarama', 450).
+
+%Reta X -> Ponta Grossa
+reta('Ponta Grossa', 'Ponta Grossa', 0).
+reta('Curitiba', 'Ponta Grossa', 97).
+
+%Reta X -> Curitiba
+reta('Curitiba', 'Curitiba', 0).
+
+
+distancia('Mandaguari', 'Jandaia', 11).
+distancia('Jandaia', 'Cambira', 16).
+distancia('Cambira', 'Apucarana', 16).
+distancia('Apucarana', 'Arapongas', 17).
+distancia('Mandaguari', 'Arapongas', 37).
+distancia('Arapongas', 'Cambe', 24).
+distancia('Cambe', 'Londrina', 13).
+distancia('Cambe', 'Astorga', 52).
+distancia('Astorga', 'Maringa', 52).
+distancia('Maringa', 'Paranavai', 74).
+distancia('Maringa', 'Sarandi', 7).
+distancia('Sarandi', 'Marialva', 10).
+distancia('Marialva', 'Mandaguari', 11).
+distancia('Apucarana', 'Ponta Grossa', 251).
+distancia('Maringa', 'Umuarama', 165).
+distancia('Maringa', 'Campo Mourao', 91).
+distancia('Campo Mourao', 'Toledo', 220).
+distancia('Umuarama', 'Toledo', 130).
+distancia('Toledo', 'Cascavel', 45).
+distancia('Cascavel', 'Pato Branco', 234).
+distancia('Pato Branco', 'Guarapuava', 187).
+distancia('Guarapuava', 'Ponta Grossa', 163).
+distancia('Ponta Grossa', 'Curitiba', 116).
+
+dados_via(1, 'Mandaguari', 'Jandaia', 11, caracteristicas(4, 0, 80)).
+dados_via(2, 'Jandaia', 'Cambira', 16, caracteristicas(2, 0, 70)).
+dados_via(3, 'Cambira', 'Apucarana', 16, caracteristicas(1, 0, 50)).
+dados_via(4, 'Apucarana', 'Arapongas', 17, caracteristicas(3, 0, 70)).
+dados_via(5, 'Mandaguari', 'Arapongas', 37, caracteristicas(3, 0, 85)).
+dados_via(6, 'Arapongas', 'Cambe', 24, caracteristicas(3, 0, 80)).
+dados_via(7, 'Cambe', 'Londrina', 13, caracteristicas(4, 8, 70)).
+dados_via(8, 'Cambe', 'Astorga', 52, caracteristicas(2, 5, 75)).
+dados_via(9, 'Astorga', 'Maringa', 52, caracteristicas(3, 0, 100)).
+dados_via(10, 'Maringa', 'Paranavai', 74, caracteristicas(3, 0, 90)).
+dados_via(11, 'Maringa', 'Sarandi', 7, caracteristicas(3, 0, 65)).
+dados_via(12, 'Sarandi', 'Marialva', 10, caracteristicas(3, 0, 90)).
+dados_via(13, 'Marialva', 'Mandaguari', 11, caracteristicas(4, 7, 100)).
+dados_via(14, 'Apucarana', 'Ponta Grossa', 251, caracteristicas(2, 0, 70)).
+dados_via(15, 'Maringa', 'Umuarama', 165, caracteristicas(3, 0, 82)).
+dados_via(16, 'Maringa', 'Campo Mourao', 91, caracteristicas(3, 10, 80)).
+dados_via(17, 'Campo Mourao', 'Toledo', 220, caracteristicas(1, 5, 88)).
+dados_via(18, 'Umuarama', 'Toledo', 130, caracteristicas(1, 0, 100)).
+dados_via(19, 'Toledo', 'Cascavel', 45, caracteristicas(3, 5, 95)).
+dados_via(20, 'Cascavel', 'Pato Branco', 234, caracteristicas(5, 10, 110)).
+dados_via(21, 'Pato Branco', 'Guarapuava', 187, caracteristicas(4, 8, 99)).
+dados_via(22, 'Guarapuava', 'Ponta Grossa', 163, caracteristicas(3, 5, 80)).
+dados_via(23, 'Ponta Grossa', 'Curitiba', 116, caracteristicas(4, 8, 85)).
 
 obter_codigo(Origem, CodOr, Destino, CodDest):-
 	cidade(CodOr, Origem),
@@ -115,7 +346,7 @@ obter_reta(Origem, Destino, Reta):-
 
 pede_origem(X) :-
 	write('Digite a origem: '),
-	read(X), nl, !.
+	read(X), nl.
 
 pede_destino(Y) :-
 	write('Digite o Destino: '),
@@ -128,8 +359,7 @@ pede():-
 
 %Busca o menor caminho
 encontrarCaminho(Origem, Destino):-
-	obter_codigo(Origem, CodOr, Destino, CodDest),        %pega os codigos da cidade.
-	buscaHeuristica([[0,CodOr]],CaminhoInvertido,CodDest), %inicia apenas com origem.
+	buscaHeuristica([[0,Origem]],CaminhoInvertido,Destino), %inicia apenas com origem.
 	inverterCaminho(CaminhoInvertido, Caminho),
 	mostraCaminho(Caminho), !.
 
@@ -189,9 +419,11 @@ actualizarCostosCaminos([[Custo,NovoNo,No|Caminho]|Cola],[[NovoCusto,NovoNo,No|C
 
 
 verificaDistancia(Origem, Destino, Distancia):-
-	distancia(Origem, Destino, Distancia).
+	dados_via(_,Origem, Destino, Distancia, _).
+	%distancia(Origem, Destino, Distancia).
 verificaDistancia(Origem, Destino, Distancia):-
-	distancia(Destino, Origem, Distancia).
+	dados_via(_, Destino, Origem, Distancia, _).
+	%distancia(Destino, Origem, Distancia).
 
 inverterCaminho([X],[X]).
 inverterCaminho([X|Y], Lista):-
@@ -213,16 +445,15 @@ mostraCidade([Distancia]):-
  write(' Km.').
 
 
-mostraCidade([CodCidade|Caminho]):-
- cidade(CodCidade, Cidade),
+mostraCidade([Cidade|Caminho]):-
  write(Cidade),
  write(', '),
  mostraCidade(Caminho).
 
 
-mostraCaminho([CodCidade|Caminho]):-
+mostraCaminho([Cidade|Caminho]):-
 	write('O melhor caminho a percorrer: '),
-	mostraCidade([CodCidade | Caminho]).
+	mostraCidade([Cidade | Caminho]).
 
 
 
