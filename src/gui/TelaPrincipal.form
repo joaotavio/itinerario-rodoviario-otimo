@@ -24,16 +24,14 @@
               <text value="Origem:"/>
             </properties>
           </component>
-          <component id="769f0" class="javax.swing.JTextField" binding="campoOrigem">
+          <component id="ffd68" class="javax.swing.JComboBox" binding="campoOrigem">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
                 <maximum-size width="150" height="-1"/>
               </grid>
             </constraints>
-            <properties>
-              <text value=""/>
-            </properties>
+            <properties/>
           </component>
           <component id="51099" class="javax.swing.JLabel" binding="labelDestino">
             <constraints>
@@ -43,7 +41,7 @@
               <text value="Destino:"/>
             </properties>
           </component>
-          <component id="eaa96" class="javax.swing.JTextField" binding="campoDestino">
+          <component id="daaa6" class="javax.swing.JComboBox" binding="campoDestino">
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>

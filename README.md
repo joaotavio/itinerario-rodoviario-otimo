@@ -1,3 +1,3 @@
-# itinerario-rodoviario-otimo
-Trabalho em SWI-PROLOG para a disciplina de Paradigma de Programação Lógica e Funcional.
+# Itinerário Rodoviário
+Trabalho em SWI-PROLOG com interface gráfica feita em Java para a disciplina de Paradigma de Programação Lógica e Funcional.
 

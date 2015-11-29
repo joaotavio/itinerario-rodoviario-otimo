@@ -6,13 +6,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class TelaPrincipal extends JFrame {
     private JPanel painelCampos;
     private JLabel labelOrigem;
-    private JTextField campoOrigem;
+    private JComboBox campoOrigem;
     private JLabel labelDestino;
-    private JTextField campoDestino;
+    private JComboBox campoDestino;
     private JLabel labelPiso;
     private JSpinner spinnerPiso;
     private JPanel painelPrincipal;
@@ -44,9 +45,9 @@ public class TelaPrincipal extends JFrame {
     Prolog prolog;
 
     public TelaPrincipal() {
-        iniciarComponentes();
         prolog = new Prolog();
         prolog.iniciar();
+        iniciarComponentes();
     }
 
     private void iniciarComponentes(){
@@ -76,10 +77,16 @@ public class TelaPrincipal extends JFrame {
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         fileChooser = new JFileChooser();
+        File diretorioAtual = new File(System.getProperty("user.dir"));
+        fileChooser.setCurrentDirectory(diretorioAtual);
 
         botaoGerar.addActionListener(new AcaoBotaoGerar());
         botaoListarCidades.addActionListener(new AcaoBotaoListarCidades());
         botaoSalvarEmArquivo.addActionListener(new AcaoBotaoSalvarArquivo());
+
+        String listaCidades[] = prolog.listarCidades();
+        campoOrigem.setModel(new DefaultComboBoxModel(listaCidades));
+        campoDestino.setModel(new DefaultComboBoxModel(listaCidades));
     }
 
     private void addMenu(){
@@ -112,16 +119,19 @@ public class TelaPrincipal extends JFrame {
     private class AcaoBotaoListarCidades implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            String listaCidades = prolog.listarCidades();
-            areaTexto.setText(listaCidades);
+            String listaCidades[] = prolog.listarCidades();
+            areaTexto.setText("");
+            for (String cidade : listaCidades) {
+                areaTexto.append(cidade + "\n");
+            }
         }
     }
 
     private class AcaoBotaoGerar implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            String origem = campoOrigem.getText();
-            String destino = campoDestino.getText();
+            String origem = (String)campoOrigem.getSelectedItem();
+            String destino = (String)campoDestino.getSelectedItem();
             int piso = (Integer)spinnerPiso.getValue();
             String criterio = grupoCriterio.getSelection().getActionCommand();
             String resposta = prolog.gerarItinerario(origem, destino, piso, criterio);
@@ -159,8 +169,13 @@ public class TelaPrincipal extends JFrame {
             if (ret == JFileChooser.APPROVE_OPTION){
                 String caminho = fileChooser.getSelectedFile().getAbsolutePath();
                 String nome = fileChooser.getSelectedFile().getName();
+
                 if (prolog.carregarArquivo(caminho)) {
                     areaTexto.setText("Arquivo " + nome + " aberto com sucesso.");
+                    String listaCidades[] = prolog.listarCidades();
+                    campoOrigem.setModel(new DefaultComboBoxModel(listaCidades));
+                    campoDestino.setModel(new DefaultComboBoxModel(listaCidades));
+
                 } else {
                     areaTexto.setText("Não foi possível abrir o arquivo " + nome + ".");
                 }
