@@ -306,59 +306,60 @@ encontrarCaminho(Origem, Destino):-
 	inverterCaminho(CaminhoInvertido, Caminho),
 	mostraCaminho(Caminho), !.
 
-% en caso exista algun nodo isolado
+
+% Vertice(Cidade) separado do restante, se o grafo passar por todas as
+% cidades, nunca vai cair aqui
 encontrarCaminho(Origem, Destino):-
 	write('Não existe caminho de '),
 	write(Origem),
 	write(' a '),
 	write(Destino).
 
-% Caminhos = [Custo, Destino | Caminho] ->
-% Custo: minimo 'local',
-% Destino : ultima cidade encontrada no momento
-% Caminho : Caminho de Destino até Origem (precisa inverter para mostrar
-% de Origem a Destino
-buscaHeuristica(Caminhos, [Custo,Destino|Camino], Destino):-
-	member([Custo,Destino|Camino],Caminhos),
-	escogerProximo(Caminhos, [Custo1|_], Destino),
+% Caminhos inicia com distancia 0 e Origem e add vert de menor dist
+% Membro?
+% escolher
+buscaHeuristica(Caminhos, [Custo,Destino|Caminho], Destino):-
+	member([Custo,Destino|Caminho],Caminhos),
+	escolherProximo(Caminhos, [Custo1|_], Destino),
 	Custo1 == Custo.
 
 
-buscaHeuristica(Caminhos, Solucion, Destino):-
-	escogerProximo(Caminhos, Prox, Destino),
-	removerCamino(Prox, Caminhos, CaminosRestantes),
-	extenderSiguienteCamino(Prox, NuevosCaminos),
-	concatenarCaminhos(CaminosRestantes, NuevosCaminos, ListaCompleta),
-	buscaHeuristica(ListaCompleta, Solucion, Destino).
+buscaHeuristica(Caminhos, Solucao, Destino):-
+	escolherProximo(Caminhos, Prox, Destino),
+	removerCaminho(Prox, Caminhos, CaminhosRestantes),
+	extenderSeguinteCaminho(Prox, NovosCaminhos),
+	concatenarCaminhos(CaminhosRestantes, NovosCaminhos, ListaCompleta),
+	buscaHeuristica(ListaCompleta, Solucao, Destino).
 
-% Obtiene todos los caminos recorridos hasta el momento
-% y realiza las comparaciones. Solo se detiene cuando se encuentra
-% el menor camino (menor costo)
-escogerProximo([X],X,_):-!.
 
-escogerProximo([[Custo1,Cidade1|Resto1],[Custo2,Cidade2|_]|Cola], MejorCamino, Destino):-
+
+%Caso: Caminho dele para ele mesmo
+escolherProximo([X],X,_):-!.
+
+%Caso: Pegar o caminho 1
+escolherProximo([[Custo1,Cidade1|Resto1],[Custo2,Cidade2|_]|Cola], MelhorCaminho, Destino):-
 	obter_reta(Cidade1, Destino, Avaliacao1),
 	obter_reta(Cidade2, Destino, Avaliacao2),
 	Avaliacao1 +  Custo1 =< Avaliacao2 +  Custo2,
-	escogerProximo([[Custo1,Cidade1|Resto1]|Cola], MejorCamino, Destino).
+	escolherProximo([[Custo1,Cidade1|Resto1]|Cola], MelhorCaminho, Destino).
 
-escogerProximo([[Custo1,Cidade1|_],[Custo2,Cidade2|Resto2]|Cola], MejorCamino, Destino):-
- obter_reta(Cidade1, Destino, Avaliacao1),
- obter_reta(Cidade2, Destino, Avaliacao2),
- Avaliacao1  + Custo1 > Avaliacao2 +  Custo2,
- escogerProximo([[Custo2,Cidade2|Resto2]|Cola], MejorCamino, Destino).
+%Caso: Pegar o caminho 2
+escolherProximo([[Custo1,Cidade1|_],[Custo2,Cidade2|Resto2]|Cola], MelhorCaminho, Destino):-
+	obter_reta(Cidade1, Destino, Avaliacao1),
+	obter_reta(Cidade2, Destino, Avaliacao2),
+	Avaliacao1  + Custo1 > Avaliacao2 +  Custo2,
+	escolherProximo([[Custo2,Cidade2|Resto2]|Cola], MelhorCaminho, Destino).
 
 
-extenderSiguienteCamino([Custo,No|Caminho],NovosCaminhos):-
- findall([Custo,NovoNo,No|Caminho], (verificaDistancia(No, NovoNo,_),not(member(NovoNo,Caminho))), ListaResultante),
- actualizarCostosCaminos(ListaResultante, NovosCaminhos).
+extenderSeguinteCaminho([Custo,No|Caminho],NovosCaminhos):-
+	findall([Custo,NovoNo,No|Caminho], (verificaDistancia(No, NovoNo,_),not(member(NovoNo,Caminho))), ListaResultante),
+	atualizarCustosCaminhos(ListaResultante, NovosCaminhos).
 
-% <span id="IL_AD6" class="IL_AD">Actualizacion</span> de los costos de los caminos
-actualizarCostosCaminos([],[]):-!.
-actualizarCostosCaminos([[Custo,NovoNo,No|Caminho]|Cola],[[NovoCusto,NovoNo,No|Caminho]|Cauda1]):-
- verificaDistancia(No, NovoNo, Distancia),
- NovoCusto is Custo + Distancia,
- actualizarCostosCaminos(Cola,Cauda1).
+atualizarCustosCaminhos([],[]):-!.
+atualizarCustosCaminhos([[Custo,NovoNo,No|Caminho]|Cola],[[NovoCusto,NovoNo,No|Caminho]|Cauda1]):-
+	verificaDistancia(No, NovoNo, Distancia),
+	NovoCusto is Custo + Distancia,
+	atualizarCustosCaminhos(Cola,Cauda1).
 
 
 verificaDistancia(Origem, Destino, Distancia):-
@@ -377,8 +378,8 @@ concatenarCaminhos([],L,L).
 concatenarCaminhos([X|Y],L,[X|Lista]):- concatenarCaminhos(Y,L,Lista).
 
 
-removerCamino(X,[X|T],T):-!.
-removerCamino(X,[Y|T],[Y|T2]):-removerCamino(X,T,T2).
+removerCaminho(X,[X|T],T):-!.
+removerCaminho(X,[Y|T],[Y|T2]):-removerCaminho(X,T,T2).
 
 
 mostraCidade([Distancia]):-
