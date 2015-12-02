@@ -29,15 +29,33 @@ public class Prolog {
     }
 
     public String[] listarCidades() {
-        Query q = new Query("cidade(_, X)");
-        ArrayList<String> cidades = new ArrayList<>();
-        String resposta;
-        while (q.hasMoreSolutions()){
-            resposta = q.nextSolution().get("X").toString();
-            resposta = resposta.replace("'", "");
-            cidades.add(resposta);
+        Query q = new Query("listar_cidade(X)");
+        q.hasMoreSolutions();
+
+        Term t = q.nextSolution().get("X");
+
+        int tamLista = t.listLength();
+        String lista[] = new String[tamLista];
+
+        for (int i = 0; i < tamLista; i++) {
+            lista[i] = t.arg(1).toString().replace("'", "");
+            t = t.arg(2);
         }
-        return cidades.toArray(new String[cidades.size()]);
+
+        return lista;
+    }
+
+    public String[] listarVias(){
+        Query q = new Query("dados_via(_, X, Y, Dist, caracteristicas(Piso, Pedagio, Velocidade))");
+
+        ArrayList<String> lista = new ArrayList<>();
+        int i = 0;
+        while(q.hasMoreSolutions()) {
+            lista.add(q.nextSolution().toString());
+            System.out.println(lista.get(i++));
+        }
+
+        return lista.toArray(new String[lista.size()]);
     }
 
     public String gerarItinerario(String origem, String destino, int piso, String criterio) {

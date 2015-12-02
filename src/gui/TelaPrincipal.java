@@ -81,7 +81,7 @@ public class TelaPrincipal extends JFrame {
         fileChooser.setCurrentDirectory(diretorioAtual);
 
         botaoGerar.addActionListener(new AcaoBotaoGerar());
-        botaoListarCidades.addActionListener(new AcaoBotaoListarCidades());
+        botaoListarCidades.addActionListener(new AcaoBotaoListarVias());
         botaoSalvarEmArquivo.addActionListener(new AcaoBotaoSalvarArquivo());
 
         String listaCidades[] = prolog.listarCidades();
@@ -116,13 +116,13 @@ public class TelaPrincipal extends JFrame {
         sobre.addActionListener(new TelaSobre(this));
     }
 
-    private class AcaoBotaoListarCidades implements ActionListener{
+    private class AcaoBotaoListarVias implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            String listaCidades[] = prolog.listarCidades();
+            String listaVias[] = prolog.listarVias();
             areaTexto.setText("");
-            for (String cidade : listaCidades) {
-                areaTexto.append(cidade + "\n");
+            for (String via : listaVias) {
+                areaTexto.append(via + "\n");
             }
         }
     }

@@ -157,7 +157,7 @@
           </grid>
         </constraints>
         <properties>
-          <text value="Listar Cidades"/>
+          <text value="Listar Vias"/>
         </properties>
       </component>
     </children>

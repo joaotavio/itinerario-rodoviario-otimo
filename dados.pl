@@ -251,7 +251,6 @@ reta('Curitiba', 'Ponta Grossa', 97).
 %Reta X -> Curitiba
 reta('Curitiba', 'Curitiba', 0).
 
-
 dados_via(1, 'Mandaguari', 'Jandaia', 11, caracteristicas(4, 0, 80)).
 dados_via(2, 'Jandaia', 'Cambira', 16, caracteristicas(2, 0, 70)).
 dados_via(3, 'Cambira', 'Apucarana', 16, caracteristicas(1, 0, 50)).
@@ -275,6 +274,11 @@ dados_via(20, 'Cascavel', 'Pato Branco', 234, caracteristicas(5, 10, 110)).
 dados_via(21, 'Pato Branco', 'Guarapuava', 187, caracteristicas(4, 8, 99)).
 dados_via(22, 'Guarapuava', 'Ponta Grossa', 163, caracteristicas(3, 5, 80)).
 dados_via(23, 'Ponta Grossa', 'Curitiba', 116, caracteristicas(4, 8, 85)).
+
+listar_cidade(Lista) :-
+	setof(X, A^B^C^Y^dados_via(A, X, Y, B, C), Lista1),
+	setof(X, A^B^C^Y^dados_via(A, Y, X, B, C), Lista2),
+	union(Lista1, Lista2, Lista).
 
 obter_reta(Origem, Destino, Reta):-
 	reta(Origem, Destino, Reta), !.
