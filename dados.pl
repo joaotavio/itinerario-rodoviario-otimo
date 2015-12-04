@@ -1,4 +1,3 @@
-%%dados_via(cod, orig, dest, dist, caracter(piso, pedagio, velmedia)).
 
 %Reta de X -> Mandaguari.
 reta('Mandaguari', 'Mandaguari', 0).
@@ -251,6 +250,7 @@ reta('Curitiba', 'Ponta Grossa', 97).
 %Reta X -> Curitiba
 reta('Curitiba', 'Curitiba', 0).
 
+%%dados_via(cod, orig, dest, dist, caracter(piso, pedagio, velmedia)).
 dados_via(1, 'Mandaguari', 'Jandaia', 11, caracteristicas(4, 0, 80)).
 dados_via(2, 'Jandaia', 'Cambira', 16, caracteristicas(2, 0, 70)).
 dados_via(3, 'Cambira', 'Apucarana', 16, caracteristicas(1, 0, 50)).
@@ -284,122 +284,96 @@ obter_reta(Origem, Destino, Reta):-
 	reta(Origem, Destino, Reta), !.
 
 obter_reta(Origem, Destino, Reta):-
-	!,
-	reta(Destino, Origem, Reta).
+	!, reta(Destino, Origem, Reta).
 
-pede_origem(X) :-
-	write('Digite a origem: '),
-	read(X), nl.
+pai(Cidade, [[Cidade, Custo, Pai] | _], [Cidade, Custo, Pai]) :- !.
+pai(Cidade, [_|Resto], Pai) :- pai(Cidade, Resto, Pai).
 
-pede_destino(Y) :-
-	write('Digite o Destino: '),
-	read(Y).
-
-pede():-
-	pede_origem(X),
-	pede_destino(Y),
-	encontrarCaminho(X, Y).
+reconstruirCaminho(_, [Cidade, _, null], [Cidade]).
+reconstruirCaminho(Fechados, Vertice, [Cidade|Resto]) :-
+	[Cidade, _, Pai] = Vertice,
+	pai(Pai, Fechados, PaiNovo),
+	reconstruirCaminho(Fechados, PaiNovo, Resto).
 
 %Busca o menor caminho
-encontrarCaminho(Origem, Destino):-
-	buscaHeuristica([[0,Origem]],CaminhoInvertido,Destino), %inicia apenas com origem.
-	inverterCaminho(CaminhoInvertido, Caminho),
-	mostraCaminho(Caminho), !.
+encontrarCaminho(Origem, Destino, Caminho, Custo):-
+	a_estrela([[Origem, 0, null]], [], Destino, Fechados), %inicia apenas com origem.
+	last(Fechados, Ultimo),
+	reconstruirCaminho(Fechados, Ultimo, CaminhoInvertido),
+	reverse(CaminhoInvertido, Caminho),
+	[_,Custo,_] = Ultimo, !.
+
+% Quando não exite caminho
+encontrarCaminho(_, _, _, _):- fail.
+
+%a_estrela(Abertos, Fechados, Destino, Caminho).
+% Abertos e Fechados é uma lista de vértices
+%[Vertice, Custo, Pai]
+
+%caso de Abertos ser vazio, não tem solução
+a_estrela([], _, _, _) :- fail.
+
+%caso de achar o destino
+a_estrela(Abertos, Fechados, Destino, Caminho) :-
+	melhor_vertice(Abertos, V, Destino),
+	nth0(0, V, X), %pega a cidade
+        ( X == Destino -> %achou caminho
+	 append(Fechados, [V], Fechado2),
+	 Caminho = Fechado2;
+	%else
+	delete(Abertos, V, Abertos2),
+	append(Fechados, [V], Fechados2),
+	atualizarAdjacentes(Abertos2, Fechados2, V, NovoAbertos),
+	a_estrela(NovoAbertos, Fechados2, Destino, Caminho)).
 
 
-% Vertice(Cidade) separado do restante, se o grafo passar por todas as
-% cidades, nunca vai cair aqui
-encontrarCaminho(Origem, Destino):-
-	write('Não existe caminho de '),
-	write(Origem),
-	write(' a '),
-	write(Destino).
-
-% Caminhos inicia com distancia 0 e Origem e add vert de menor dist
-% Membro?
-% escolher
-buscaHeuristica(Caminhos, [Custo,Destino|Caminho], Destino):-
-	member([Custo,Destino|Caminho],Caminhos),
-	escolherProximo(Caminhos, [Custo1|_], Destino),
-	Custo1 == Custo.
+atualizarAdjacentes(Abertos, Fechados, [Cidade, Custo, _], NovoAbertos) :-
+	findall(
+	    [Cidade2, S, Cidade],
+	    (verificaDistancia(Cidade, Cidade2, Distancia),
+	     S is Distancia+Custo, custo(Cidade2, Abertos, CustoAntigo), S < CustoAntigo,
+	     not(member([Cidade2, _, _], Fechados))),
+	    Adjacentes),
+	deletarRepetidos(Abertos, Adjacentes, Abertos2),
+	union(Abertos2, Adjacentes, NovoAbertos).
 
 
-buscaHeuristica(Caminhos, Solucao, Destino):-
-	escolherProximo(Caminhos, Prox, Destino),
-	removerCaminho(Prox, Caminhos, CaminhosRestantes),
-	extenderSeguinteCaminho(Prox, NovosCaminhos),
-	concatenarCaminhos(CaminhosRestantes, NovosCaminhos, ListaCompleta),
-	buscaHeuristica(ListaCompleta, Solucao, Destino).
+deletarRepetidos(Abertos, [], Abertos) :- !.
+deletarRepetidos(Abertos, [[Cidade, _, _]|Resto], Novo) :-
+	delete(Abertos, [Cidade,_,_], Abertos2),
+	deletarRepetidos(Abertos2, Resto, Novo).
 
 
+custo(_, [], 100000000) :- !.
+custo(Cidade, [[Cidade, Custo, _] | _], Custo) :- !.
+custo(Cidade, [_|Resto], Custo) :- custo(Cidade, Resto, Custo).
 
-%Caso: Caminho dele para ele mesmo
-escolherProximo([X],X,_):-!.
 
+%Retorna o melhor vértice
+melhor_vertice([X],X,_):- !.
 %Caso: Pegar o caminho 1
-escolherProximo([[Custo1,Cidade1|Resto1],[Custo2,Cidade2|_]|Cola], MelhorCaminho, Destino):-
-	obter_reta(Cidade1, Destino, Avaliacao1),
-	obter_reta(Cidade2, Destino, Avaliacao2),
-	Avaliacao1 +  Custo1 =< Avaliacao2 +  Custo2,
-	escolherProximo([[Custo1,Cidade1|Resto1]|Cola], MelhorCaminho, Destino).
+melhor_vertice([[Cidade1,Custo1|Resto1],[Cidade2, Custo2|_]|Resto], MelhorVertice, Destino):-
+	obter_reta(Cidade1, Destino, Heuristica1),
+	obter_reta(Cidade2, Destino, Heuristica2),
+	Heuristica1 +  Custo1 =< Heuristica2 +  Custo2,
+	melhor_vertice([[Cidade1,Custo1|Resto1]|Resto], MelhorVertice, Destino).
 
 %Caso: Pegar o caminho 2
-escolherProximo([[Custo1,Cidade1|_],[Custo2,Cidade2|Resto2]|Cola], MelhorCaminho, Destino):-
-	obter_reta(Cidade1, Destino, Avaliacao1),
-	obter_reta(Cidade2, Destino, Avaliacao2),
-	Avaliacao1  + Custo1 > Avaliacao2 +  Custo2,
-	escolherProximo([[Custo2,Cidade2|Resto2]|Cola], MelhorCaminho, Destino).
-
-
-extenderSeguinteCaminho([Custo,No|Caminho],NovosCaminhos):-
-	findall([Custo,NovoNo,No|Caminho], (verificaDistancia(No, NovoNo,_),not(member(NovoNo,Caminho))), ListaResultante),
-	atualizarCustosCaminhos(ListaResultante, NovosCaminhos).
-
-atualizarCustosCaminhos([],[]):-!.
-atualizarCustosCaminhos([[Custo,NovoNo,No|Caminho]|Cola],[[NovoCusto,NovoNo,No|Caminho]|Cauda1]):-
-	verificaDistancia(No, NovoNo, Distancia),
-	NovoCusto is Custo + Distancia,
-	atualizarCustosCaminhos(Cola,Cauda1).
+melhor_vertice([[Cidade1,Custo1|_],[Cidade2,Custo2|Resto2]|Resto], MelhorVertice, Destino):-
+	obter_reta(Cidade1, Destino, Heuristica1),
+	obter_reta(Cidade2, Destino, Heuristica2),
+	Heuristica1  + Custo1 > Heuristica2 +  Custo2,
+	melhor_vertice([[Cidade2,Custo2|Resto2]|Resto], MelhorVertice, Destino).
 
 
 verificaDistancia(Origem, Destino, Distancia):-
 	dados_via(_,Origem, Destino, Distancia, _).
-	%distancia(Origem, Destino, Distancia).
 verificaDistancia(Origem, Destino, Distancia):-
 	dados_via(_, Destino, Origem, Distancia, _).
-	%distancia(Destino, Origem, Distancia).
 
-inverterCaminho([X],[X]).
-inverterCaminho([X|Y], Lista):-
-	inverterCaminho(Y,ListaInt),
-        concatenarCaminhos(ListaInt,[X],Lista).
-
-concatenarCaminhos([],L,L).
-concatenarCaminhos([X|Y],L,[X|Lista]):- concatenarCaminhos(Y,L,Lista).
-
-
-removerCaminho(X,[X|T],T):-!.
-removerCaminho(X,[Y|T],[Y|T2]):-removerCaminho(X,T,T2).
-
-
-mostraCidade([Distancia]):-
- nl,
- write('Menor distancia: '),
- write(Distancia),
- write(' Km.').
-
-
-mostraCidade([Cidade|Caminho]):-
- write(Cidade),
- write(', '),
- mostraCidade(Caminho).
-
-
-mostraCaminho([Cidade|Caminho]):-
-	write('O melhor caminho a percorrer: '),
-	mostraCidade([Cidade | Caminho]).
-
-
-
-
+%testa Todos os Caminhos de X para Y
+teste(Caminho, Custo) :-
+	dados_via(_, X, _, _, _),
+	%dados_via(_, _, Y, _, _),
+	encontrarCaminho(X, 'Curitiba', Caminho, Custo).
 
