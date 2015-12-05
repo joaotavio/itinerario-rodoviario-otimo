@@ -251,34 +251,49 @@ reta('Curitiba', 'Ponta Grossa', 97).
 reta('Curitiba', 'Curitiba', 0).
 
 %%dados_via(cod, orig, dest, dist, caracter(piso, pedagio, velmedia)).
-dados_via(1, 'Mandaguari', 'Jandaia', 11, caracteristicas(4, 0, 80)).
-dados_via(2, 'Jandaia', 'Cambira', 16, caracteristicas(2, 0, 70)).
-dados_via(3, 'Cambira', 'Apucarana', 16, caracteristicas(1, 0, 50)).
-dados_via(4, 'Apucarana', 'Arapongas', 17, caracteristicas(3, 0, 70)).
-dados_via(5, 'Mandaguari', 'Arapongas', 37, caracteristicas(3, 0, 85)).
-dados_via(6, 'Arapongas', 'Cambe', 24, caracteristicas(3, 0, 80)).
+dados_via(1, 'Mandaguari', 'Jandaia', 11, caracteristicas(4, 10, 80)).
+dados_via(2, 'Jandaia', 'Cambira', 16, caracteristicas(2, 12, 70)).
+dados_via(3, 'Cambira', 'Apucarana', 16, caracteristicas(1, 12, 50)).
+dados_via(4, 'Apucarana', 'Arapongas', 17, caracteristicas(3, 20, 70)).
+dados_via(5, 'Mandaguari', 'Arapongas', 37, caracteristicas(3, 21, 85)).
+dados_via(6, 'Arapongas', 'Cambe', 24, caracteristicas(3, 30, 80)).
 dados_via(7, 'Cambe', 'Londrina', 13, caracteristicas(4, 8, 70)).
-dados_via(8, 'Cambe', 'Astorga', 52, caracteristicas(2, 5, 75)).
-dados_via(9, 'Astorga', 'Maringa', 52, caracteristicas(3, 0, 100)).
-dados_via(10, 'Maringa', 'Paranavai', 74, caracteristicas(3, 0, 90)).
-dados_via(11, 'Maringa', 'Sarandi', 7, caracteristicas(3, 0, 65)).
-dados_via(12, 'Sarandi', 'Marialva', 10, caracteristicas(3, 0, 90)).
-dados_via(13, 'Marialva', 'Mandaguari', 11, caracteristicas(4, 7, 100)).
-dados_via(14, 'Apucarana', 'Ponta Grossa', 251, caracteristicas(2, 0, 70)).
-dados_via(15, 'Maringa', 'Umuarama', 165, caracteristicas(3, 0, 82)).
+dados_via(8, 'Cambe', 'Astorga', 52, caracteristicas(2, 25, 75)).
+dados_via(9, 'Astorga', 'Maringa', 52, caracteristicas(3, 30, 100)).
+dados_via(10, 'Maringa', 'Paranavai', 74, caracteristicas(3, 22, 90)).
+dados_via(11, 'Maringa', 'Sarandi', 7, caracteristicas(3, 7, 65)).
+dados_via(12, 'Sarandi', 'Marialva', 10, caracteristicas(3, 10, 90)).
+dados_via(13, 'Marialva', 'Mandaguari', 11, caracteristicas(4, 8, 100)).
+dados_via(14, 'Apucarana', 'Ponta Grossa', 251, caracteristicas(2, 50, 70)).
+dados_via(15, 'Maringa', 'Umuarama', 165, caracteristicas(3, 40, 82)).
 dados_via(16, 'Maringa', 'Campo Mourao', 91, caracteristicas(3, 10, 80)).
-dados_via(17, 'Campo Mourao', 'Toledo', 220, caracteristicas(1, 5, 88)).
-dados_via(18, 'Umuarama', 'Toledo', 130, caracteristicas(1, 0, 100)).
-dados_via(19, 'Toledo', 'Cascavel', 45, caracteristicas(3, 5, 95)).
-dados_via(20, 'Cascavel', 'Pato Branco', 234, caracteristicas(5, 10, 110)).
-dados_via(21, 'Pato Branco', 'Guarapuava', 187, caracteristicas(4, 8, 99)).
-dados_via(22, 'Guarapuava', 'Ponta Grossa', 163, caracteristicas(3, 5, 80)).
-dados_via(23, 'Ponta Grossa', 'Curitiba', 116, caracteristicas(4, 8, 85)).
+dados_via(17, 'Campo Mourao', 'Toledo', 220, caracteristicas(3, 35, 88)).
+dados_via(18, 'Umuarama', 'Toledo', 130, caracteristicas(2, 22, 100)).
+dados_via(19, 'Toledo', 'Cascavel', 45, caracteristicas(3, 17, 95)).
+dados_via(20, 'Cascavel', 'Pato Branco', 234, caracteristicas(5, 50, 110)).
+dados_via(21, 'Pato Branco', 'Guarapuava', 187, caracteristicas(4, 27, 99)).
+dados_via(22, 'Guarapuava', 'Ponta Grossa', 163, caracteristicas(3, 15, 80)).
+dados_via(23, 'Ponta Grossa', 'Curitiba', 116, caracteristicas(4, 18, 85)).
+
 
 listar_cidade(Lista) :-
 	setof(X, A^B^C^Y^dados_via(A, X, Y, B, C), Lista1),
 	setof(X, A^B^C^Y^dados_via(A, Y, X, B, C), Lista2),
 	union(Lista1, Lista2, Lista).
+
+calc_custo([_], 0).
+calc_custo([A, B], CustoResto):- retorna_custo(A, B, CustoResto),!.
+calc_custo([A, B|Y], Custo):-
+	calc_custo([B|Y], CustoResto),
+	retorna_custo(A, B, Custo2),
+	Custo is Custo2 + CustoResto.
+
+retorna_custo(A, B, C) :-
+	dados_via(_, A, B, _, caracteristicas(_, C, _)).
+
+retorna_custo(A, B, C) :-
+	dados_via(_, B, A, _, caracteristicas(_, C, _)).
+
 
 obter_reta(Origem, Destino, Reta):-
 	reta(Origem, Destino, Reta), !.
@@ -296,25 +311,26 @@ reconstruirCaminho(Fechados, Vertice, [Cidade|Resto]) :-
 	reconstruirCaminho(Fechados, PaiNovo, Resto).
 
 %Busca o menor caminho
-encontrarCaminho(Origem, Destino, Caminho, Custo):-
-	a_estrela([[Origem, 0, null]], [], Destino, Fechados), %inicia apenas com origem.
+criterio_distancia(Origem, Destino, Piso, Caminho, Distancia, Custo):-
+	a_estrela([[Origem, 0, null]], [], Destino, Piso, Fechados), %inicia apenas com origem.
 	last(Fechados, Ultimo),
 	reconstruirCaminho(Fechados, Ultimo, CaminhoInvertido),
 	reverse(CaminhoInvertido, Caminho),
-	[_,Custo,_] = Ultimo, !.
+	[_,Distancia,_] = Ultimo,
+	calc_custo(Caminho, Custo), !.
 
 % Quando não exite caminho
-encontrarCaminho(_, _, _, _):- fail.
+criterio_distancia(_, _, _, _, _, _):- fail.
 
 %a_estrela(Abertos, Fechados, Destino, Caminho).
 % Abertos e Fechados é uma lista de vértices
 %[Vertice, Custo, Pai]
 
 %caso de Abertos ser vazio, não tem solução
-a_estrela([], _, _, _) :- fail.
+a_estrela([], _, _, _, _) :- fail.
 
 %caso de achar o destino
-a_estrela(Abertos, Fechados, Destino, Caminho) :-
+a_estrela(Abertos, Fechados, Destino, Piso, Caminho) :-
 	melhor_vertice(Abertos, V, Destino),
 	nth0(0, V, X), %pega a cidade
         ( X == Destino -> %achou caminho
@@ -323,14 +339,14 @@ a_estrela(Abertos, Fechados, Destino, Caminho) :-
 	%else
 	delete(Abertos, V, Abertos2),
 	append(Fechados, [V], Fechados2),
-	atualizarAdjacentes(Abertos2, Fechados2, V, NovoAbertos),
-	a_estrela(NovoAbertos, Fechados2, Destino, Caminho)).
+	atualizarAdjacentes(Abertos2, Fechados2, V, Piso, NovoAbertos),
+	a_estrela(NovoAbertos, Fechados2, Destino, Piso, Caminho)).
 
 
-atualizarAdjacentes(Abertos, Fechados, [Cidade, Custo, _], NovoAbertos) :-
+atualizarAdjacentes(Abertos, Fechados, [Cidade, Custo, _], Piso, NovoAbertos) :-
 	findall(
 	    [Cidade2, S, Cidade],
-	    (verificaDistancia(Cidade, Cidade2, Distancia),
+	    (verificaDistancia(Cidade, Cidade2, Distancia, Piso),
 	     S is Distancia+Custo, custo(Cidade2, Abertos, CustoAntigo), S < CustoAntigo,
 	     not(member([Cidade2, _, _], Fechados))),
 	    Adjacentes),
@@ -366,20 +382,80 @@ melhor_vertice([[Cidade1,Custo1|_],[Cidade2,Custo2|Resto2]|Resto], MelhorVertice
 	melhor_vertice([[Cidade2,Custo2|Resto2]|Resto], MelhorVertice, Destino).
 
 
-verificaDistancia(Origem, Destino, Distancia):-
-	dados_via(_,Origem, Destino, Distancia, _).
-verificaDistancia(Origem, Destino, Distancia):-
-	dados_via(_, Destino, Origem, Distancia, _).
+verificaDistancia(Origem, Destino, Distancia, Piso):-
+	dados_via(_,Origem, Destino, Distancia, caracteristicas(Piso2,_,_)),
+	Piso2 >= Piso.
+verificaDistancia(Origem, Destino, Distancia, Piso):-
+	dados_via(_, Destino, Origem, Distancia, caracteristicas(Piso2,_,_)),
+	Piso2 >= Piso.
 
-kesimo([X | _], 0, X) :- !.
-kesimo([_ | XS], K, X) :-
-	K > 0,
-	K0 is K - 1,
-	kesimo(XS, K0, X).
+%ACHAR MENOR CUSTO
+min([X],X).
+min([X|Y],M):-
+	min(Y,N),
+	(X<N -> M=X; M=N).
 
-%testa Todos os Caminhos de X para Y
-teste(Caminho, Custo) :-
-	dados_via(_, X, _, _, _),
-	%dados_via(_, _, Y, _, _),
-	encontrarCaminho(X, 'Curitiba', Caminho, Custo).
+retorna_distancia(A, B, D) :-
+	dados_via(_, A, B, D, _).
 
+retorna_distancia(A, B, D) :-
+	dados_via(_, B, A, D, _).
+
+
+calc_dist([A, B], DistResto):- retorna_distancia(A, B, DistResto),!.
+calc_dist([A, B|Y], Dist):-
+	calc_dist([B|Y], DistResto),
+	retorna_distancia(A, B, Dist2),
+	Dist is Dist2 + DistResto.
+
+criterio_custo(Origem, Destino, Caminho, Custo, _, Distancia) :-
+	Origem == Destino,
+	Caminho = [Origem],
+	Custo is 0,
+	Distancia is 0, !.
+
+criterio_custo(Origem, Destino, Qualidade, Caminho, Distancia, Custo) :-
+	caminho_custo(Origem, Destino, [], CaminhosPossiveis, [], CustosPossiveis, Qualidade),
+	min(CustosPossiveis, Custo),
+	nth0(Pos,CustosPossiveis,Custo),
+	nth0(Pos,CaminhosPossiveis,Caminho),
+	%encontra_ind(Custo, CustosPossiveis, Pos),
+	%encontra_elem(Pos, CaminhosPossiveis, Caminho),
+	calc_dist(Caminho, Distancia), !.
+
+caminho_custo(Origem, Destino, ListaCaminhos, Caminho, ListaCustos, Custo, QualidadePista) :-
+	travessia_custo(Origem, Destino, [Origem], CaminhoInvertido, CustoAux, QualidadePista),
+	reverse(CaminhoInvertido, CaminhoAux),
+	\+ member(CaminhoAux, ListaCaminhos),
+	\+ member(CustoAux, ListaCustos),
+	caminho_custo(Origem, Destino, [CaminhoAux | ListaCaminhos], Caminho, [CustoAux | ListaCustos], Custo, QualidadePista).
+
+
+caminho_custo(_, _, Caminho, Caminho, Custo, Custo, _).
+
+travessia_custo(Origem, Destino, Visitados, [Destino | Visitados], Custo1, QualidadePista) :-
+	escolhe_via(Origem, Destino, _, Custo1, QualidadePista).
+
+travessia_custo(Origem, Destino, Visitados, Caminho, Custo, QualidadePista) :-
+	escolhe_via(Origem, CidadeC, _, Custo2, QualidadePista),
+	CidadeC \= Destino,
+	\+ member(CidadeC, Visitados),
+	travessia_custo(CidadeC, Destino, [CidadeC|Visitados], Caminho, CustoResto, QualidadePista),
+	Custo is Custo2 + CustoResto.
+
+escolhe_via(A, B, D, Custo, Q) :-
+	dados_via(_, A, B, D, caracteristicas(Qlinha, Custo, _)),
+	Qlinha >= Q.
+
+escolhe_via(A, B, D, Custo, Q) :-
+	dados_via(_, B, A, D, caracteristicas(Qlinha, Custo, _)),
+	Qlinha >= Q.
+
+
+salvarArquivo(Caminho, Conteudo) :-
+	open(Caminho, write, Arquivo),
+	current_output(Antigo),
+	set_output(Arquivo),
+	write(Conteudo),
+	close(Arquivo),
+	set_output(Antigo).

@@ -46,7 +46,11 @@ public class TelaPrincipal extends JFrame {
 
     public TelaPrincipal() {
         prolog = new Prolog();
-        prolog.iniciar();
+        if (!prolog.iniciar()){
+            mostrarMensagem("Arquivo do prolog não pode ser encontrado.");
+            dispose();
+            System.exit(0);
+        }
         iniciarComponentes();
     }
 
@@ -72,7 +76,7 @@ public class TelaPrincipal extends JFrame {
         radioMenorDuracao.setActionCommand("C2");
         radioMenorCusto.setActionCommand("C3");
 
-        //areaTexto.setEditable(false);
+        areaTexto.setEditable(false);
         areaTexto.setLineWrap(true);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -116,6 +120,10 @@ public class TelaPrincipal extends JFrame {
         sobre.addActionListener(new TelaSobre(this));
     }
 
+    private void mostrarMensagem(String msg){
+        JOptionPane.showMessageDialog(this, msg);
+    }
+
     private class AcaoBotaoListarVias implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -142,14 +150,24 @@ public class TelaPrincipal extends JFrame {
     private class AcaoBotaoSalvarArquivo implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
+            fileChooser.setSelectedFile(new File("saida.txt"));
             int ret = fileChooser.showSaveDialog(TelaPrincipal.this);
 
             if (ret == JFileChooser.APPROVE_OPTION){
                 String caminho = fileChooser.getSelectedFile().getAbsolutePath();
-                String conteudo = areaTexto.getText();
-                prolog.salvarEmArquivo(caminho, conteudo);
-                String nome = fileChooser.getSelectedFile().getName();
-                areaTexto.setText("Arquivo " + nome + " salvo com sucesso.");
+                int resultado = JOptionPane.YES_OPTION;
+                if (new File(caminho).exists()){
+                    resultado = JOptionPane.showConfirmDialog(TelaPrincipal.this,"Arquivo já existe, deseja substituir?", "Substituir arquivo", JOptionPane.YES_NO_OPTION);
+                }
+                if (resultado == JOptionPane.YES_OPTION){
+                    String conteudo = areaTexto.getText();
+                    String nome = fileChooser.getSelectedFile().getName();
+                    if (prolog.salvarEmArquivo(caminho, conteudo)){
+                        mostrarMensagem("Arquivo " + nome + " salvo com sucesso.");
+                    } else {
+                        mostrarMensagem("ERRO: Não foi possível salvar o arquivo " + nome + ".");
+                    }
+                }
             }
         }
     }
@@ -164,6 +182,7 @@ public class TelaPrincipal extends JFrame {
     private class AcaoItemMenuAbrirArquivo implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
+            fileChooser.setSelectedFile(new File(""));
             int ret = fileChooser.showOpenDialog(TelaPrincipal.this);
 
             if (ret == JFileChooser.APPROVE_OPTION){
@@ -171,13 +190,13 @@ public class TelaPrincipal extends JFrame {
                 String nome = fileChooser.getSelectedFile().getName();
 
                 if (prolog.carregarArquivo(caminho)) {
-                    areaTexto.setText("Arquivo " + nome + " aberto com sucesso.");
+                    mostrarMensagem("Arquivo " + nome + " aberto com sucesso.");
                     String listaCidades[] = prolog.listarCidades();
                     campoOrigem.setModel(new DefaultComboBoxModel(listaCidades));
                     campoDestino.setModel(new DefaultComboBoxModel(listaCidades));
 
                 } else {
-                    areaTexto.setText("Não foi possível abrir o arquivo " + nome + ".");
+                    mostrarMensagem("ERRO: Não foi possível abrir o arquivo " + nome + ".");
                 }
             }
         }
