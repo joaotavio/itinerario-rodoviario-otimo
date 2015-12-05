@@ -365,9 +365,15 @@ dados_via(26, 'Itambe', 'Bom Sucesso', 23, caracteristicas(1, 30, 50)).
 dados_via(27, 'Cianorte', 'Umuarama', 88, caracteristicas(4, 27, 100)).
 dados_via(28, 'Cianorte', 'Itambe', 92, caracteristicas(3, 35, 80)).
 dados_via(28, 'Cianorte', 'Campo Mourao', 68, caracteristicas(5, 20, 105)).
+dados_via(29, 'Guarapuava', 'Curitiba', 257, caracteristicas(3, 30, 76)).
+dados_via(30, 'Guarapuava', 'Cascavel', 246, caracteristicas(5, 35, 120)).
+dados_via(31, 'Umuarama', 'Campo Mourao', 108, caracteristicas(4, 15, 110)).
+dados_via(32, 'Mandaguari', 'Bom Sucesso', 31, caracteristicas(2, 15, 90)).
+dados_via(33, 'Londrina', 'Ponta Grossa', 272, caracteristicas(3, 40, 75)).
+dados_via(34, 'Londrina', 'Apucarana', 71, caracteristicas(3, 15, 100)).
+dados_via(35, 'Umuarama', 'Paranavai', 149, caracteristicas(1, 25, 90)).
 
-
-maior_velocidade(110).
+maior_velocidade(120).
 menor_pedagio(7).
 
 %Quanto maior velocidade maior o consumo de gasolina
@@ -489,15 +495,15 @@ criterioX(Origem, Destino, Piso, Criterio, Caminho, Total):-
 	reverse(CaminhoInvertido, Caminho),
 	[_,Total,_] = Ultimo.
 
-% Quando não exite caminho
+% Quando nï¿½o exite caminho
 criterioX(_, _, _, _, _, _):- fail.
 
 
 %a_estrela(Abertos, Fechados, Destino, Caminho).
-% Abertos e Fechados é uma lista de vértices
+% Abertos e Fechados ï¿½ uma lista de vï¿½rtices
 %[Vertice, Custo, Pai]
 
-%caso de Abertos ser vazio, não tem solução
+%caso de Abertos ser vazio, nï¿½o tem soluï¿½ï¿½o
 a_estrela([], _, _, _, _, _) :- fail.
 
 %caso de achar o destino
@@ -536,7 +542,7 @@ custo(Cidade, [[Cidade, Custo, _] | _], Custo) :- !.
 custo(Cidade, [_|Resto], Custo) :- custo(Cidade, Resto, Custo).
 
 
-%Retorna o melhor vértice
+%Retorna o melhor vï¿½rtice
 melhor_vertice([X],X,_,_):- !.
 %Caso: Pegar o caminho 1
 melhor_vertice([[Cidade1,Custo1|Resto1],[Cidade2, Custo2|_]|Resto], MelhorVertice, Destino, Criterio):-
