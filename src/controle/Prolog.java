@@ -90,22 +90,23 @@ public class Prolog {
     }
 
     public String gerarItinerario(String origem, String destino, int piso, String criterio) {
-        Query q = null;
+        Query q;
         String resposta, caminho, strCusto, strTempo, strDistancia;
+        q = new Query("encontrarCaminho('"+origem+"', '"+destino+"', "+piso+", '"+criterio+"', Caminho, Distancia, Custo, Tempo)");
         if (criterio.equals("C1")){
-            q = new Query("criterio_distancia('"+origem+"', '"+destino+"', "+piso+", Caminho, Distancia, Custo)");
+            resposta = "Caminho mais curto:\n";
         } else if (criterio.equals("C2")){
-
+            resposta = "Caminho mais rápido:\n";
         } else {
-            q = new Query("criterio_custo('"+origem+"', '"+destino+"', "+piso+", Caminho, Distancia, Custo)");
+            resposta = "Caminho mais barato:\n";
         }
-        if (q != null && q.hasSolution()){
+        if (q.hasSolution()){
             Term t = q.oneSolution().get("Caminho");
             caminho =  transformarEmCaminho(transformarEmLista(t));
             strDistancia = "\nDistância: " + q.oneSolution().get("Distancia").toString()+"km.";
             strCusto = "\nCusto: R$" + q.oneSolution().get("Custo").toString()+".";
-            strTempo = "\nTempo: 0 horas";
-            resposta = "Caminho: " + caminho + strDistancia + strCusto + strTempo;
+            strTempo = "\nTempo: "+ q.oneSolution().get("Tempo").toString() + " horas";
+            resposta += "Caminho: " + caminho + strDistancia + strCusto + strTempo;
         } else {
             resposta = "Não existe caminho com essas características.";
         }
