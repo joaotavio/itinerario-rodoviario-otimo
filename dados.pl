@@ -1,4 +1,5 @@
 
+
 %Reta de X -> Mandaguari.
 reta('Mandaguari', 'Mandaguari', 0).
 reta('Jandaia', 'Mandaguari', 10).
@@ -20,6 +21,9 @@ reta('Astorga', 'Mandaguari', 30).
 reta('Umuarama', 'Mandaguari', 168).
 reta('Ponta Grossa', 'Mandaguari', 234).
 reta('Curitiba', 'Mandaguari', 324).
+reta('Bom Sucesso', 'Mandaguari', 23).
+reta('Itambe', 'Mandaguari', 35).
+reta('Cianorte', 'Mandaguari', 98).
 
 %Reta X -> Jandaia
 reta('Jandaia', 'Jandaia', 0).
@@ -41,6 +45,10 @@ reta('Astorga', 'Jandaia', 40).
 reta('Umuarama', 'Jandaia', 172).
 reta('Ponta Grossa', 'Jandaia', 224).
 reta('Curitiba', 'Jandaia', 315).
+reta('Bom Sucesso', 'Jandaia', 18).
+reta('Itambe', 'Jandaia', 36).
+reta('Cianorte', 'Jandaia', 100).
+
 
 %Reta X -> Marialva
 reta('Marialva', 'Marialva', 0).
@@ -61,6 +69,10 @@ reta('Astorga', 'Marialva', 30).
 reta('Umuarama', 'Marialva', 159).
 reta('Ponta Grossa', 'Marialva', 245).
 reta('Curitiba', 'Marialva', 336).
+reta('Bom Sucesso', 'Marialva', 25).
+reta('Itambe', 'Marialva', 28).
+reta('Cianorte', 'Marialva', 86).
+
 
 %Reta X -> Sarandi
 reta('Sarandi', 'Sarandi', 0).
@@ -80,6 +92,10 @@ reta('Astorga', 'Sarandi', 31).
 reta('Umuarama', 'Sarandi', 152).
 reta('Ponta Grossa', 'Sarandi', 254).
 reta('Curitiba', 'Sarandi', 345).
+reta('Bom Sucesso', 'Sarandi', 31).
+reta('Itambe', 'Sarandi', 27).
+reta('Cianorte', 'Sarandi', 79).
+
 
 
 %Reta X -> Maringa
@@ -99,6 +115,10 @@ reta('Astorga', 'Maringa', 34).
 reta('Umuarama', 'Maringa', 147).
 reta('Ponta Grossa', 'Maringa', 260).
 reta('Curitiba', 'Maringa', 351).
+reta('Bom Sucesso', 'Maringa', 36).
+reta('Itambe', 'Maringa', 27).
+reta('Cianorte', 'Maringa', 74).
+
 
 %Reta X -> Cambira
 reta('Cambira', 'Cambira', 0).
@@ -116,6 +136,10 @@ reta('Astorga', 'Cambira', 40).
 reta('Umuarama', 'Cambira', 179).
 reta('Ponta Grossa', 'Cambira', 221).
 reta('Curitiba', 'Cambira', 311).
+reta('Bom Sucesso', 'Cambira', 23).
+reta('Itambe', 'Cambira', 43).
+reta('Cianorte', 'Cambira', 106).
+
 
 %Reta X -> Apucarana
 reta('Apucarana', 'Apucarana', 0).
@@ -132,6 +156,10 @@ reta('Astorga', 'Apucarana', 40).
 reta('Umuarama', 'Apucarana', 191).
 reta('Ponta Grossa', 'Apucarana', 217).
 reta('Curitiba', 'Apucarana', 305).
+reta('Bom Sucesso', 'Apucarana', 36).
+reta('Itambe', 'Apucarana', 55).
+reta('Cianorte', 'Apucarana', 118).
+
 
 %Reta X -> Arapongas
 reta('Arapongas', 'Arapongas', 0).
@@ -147,6 +175,10 @@ reta('Astorga', 'Arapongas', 31).
 reta('Umuarama', 'Arapongas', 197).
 reta('Ponta Grossa', 'Arapongas', 227).
 reta('Curitiba', 'Arapongas', 313).
+reta('Bom Sucesso', 'Arapongas', 48).
+reta('Itambe', 'Arapongas', 64).
+reta('Cianorte', 'Arapongas', 124).
+
 
 %Reta X -> Cambe
 reta('Cambe', 'Cambe', 0).
@@ -161,6 +193,10 @@ reta('Astorga', 'Cambe', 39).
 reta('Umuarama', 'Cambe', 215).
 reta('Ponta Grossa', 'Cambe', 233).
 reta('Curitiba', 'Cambe', 315).
+reta('Bom Sucesso', 'Cambe', 69).
+reta('Itambe', 'Cambe', 84).
+reta('Cianorte', 'Cambe', 143).
+
 
 %Reta X -> Londrina
 reta('Londrina', 'Londrina', 0).
@@ -174,6 +210,10 @@ reta('Astorga', 'Londrina', 51).
 reta('Umuarama', 'Londrina', 225).
 reta('Ponta Grossa', 'Londrina', 225).
 reta('Curitiba', 'Londrina', 305).
+reta('Bom Sucesso', 'Londrina', 76).
+reta('Itambe', 'Londrina', 93).
+reta('Cianorte', 'Londrina', 153).
+
 
 %Reta X -> Paranavai
 reta('Paranavai', 'Paranavai', 0).
@@ -186,6 +226,10 @@ reta('Astorga', 'Paranavai', 84).
 reta('Umuarama', 'Paranavai', 116).
 reta('Ponta Grossa', 'Paranavai', 324).
 reta('Curitiba', 'Paranavai', 416).
+reta('Bom Sucesso', 'Paranavai', 99).
+reta('Itambe', 'Paranavai', 80).
+reta('Cianorte', 'Paranavai', 66).
+
 
 %Reta X -> Campo Mourao
 reta('Campo Mourao', 'Campo Mourao', 0).
@@ -197,6 +241,10 @@ reta('Astorga', 'Campo Mourao', 115).
 reta('Umuarama', 'Campo Mourao', 101).
 reta('Ponta Grossa', 'Campo Mourao', 254).
 reta('Curitiba', 'Campo Mourao', 350).
+reta('Bom Sucesso', 'Campo Mourao', 73).
+reta('Itambe', 'Campo Mourao', 58).
+reta('Cianorte', 'Campo Mourao', 49).
+
 
 %Reta X -> Toledo
 reta('Toledo', 'Toledo', 0).
@@ -207,6 +255,10 @@ reta('Astorga', 'Toledo', 268).
 reta('Umuarama', 'Toledo', 114).
 reta('Ponta Grossa', 'Toledo', 364).
 reta('Curitiba', 'Toledo', 458).
+reta('Bom Sucesso', 'Toledo', 230).
+reta('Itambe', 'Toledo', 214).
+reta('Cianorte', 'Toledo', 165).
+
 
 %Reta X -> Pato Branco
 reta('Pato Branco', 'Pato Branco', 0).
@@ -216,6 +268,9 @@ reta('Astorga', 'Pato Branco', 348).
 reta('Umuarama', 'Pato Branco', 282).
 reta('Ponta Grossa', 'Pato Branco', 282).
 reta('Curitiba', 'Pato Branco', 353).
+reta('Bom Sucesso', 'Pato Branco', 295).
+reta('Itambe', 'Pato Branco', 294).
+reta('Cianorte', 'Pato Branco', 286).
 
 %Reta X -> Guarapuava
 reta('Guarapuava', 'Guarapuava', 0).
@@ -224,6 +279,9 @@ reta('Astorga', 'Guarapuava', 240).
 reta('Umuarama', 'Guarapuava', 261).
 reta('Ponta Grossa', 'Guarapuava', 135).
 reta('Curitiba', 'Guarapuava', 221).
+reta('Bom Sucesso', 'Guarapuava', 190).
+reta('Itambe', 'Guarapuava', 200).
+reta('Cianorte', 'Guarapuava', 225).
 
 %Reta X -> Cascavel
 reta('Cascavel', 'Cascavel', 0).
@@ -231,24 +289,51 @@ reta('Astorga', 'Cascavel', 264).
 reta('Umuarama', 'Cascavel', 133).
 reta('Ponta Grossa', 'Cascavel', 406).
 reta('Curitiba', 'Cascavel', 425).
+reta('Bom Sucesso', 'Cascavel', 221).
+reta('Itambe', 'Cascavel', 208).
+reta('Cianorte', 'Cascavel', 168).
 
 %Reta X -> Astorga
 reta('Astorga', 'Astorga', 0).
 reta('Umuarama', 'Astorga', 179).
 reta('Ponta Grossa', 'Astorga', 257).
 reta('Curitiba', 'Astorga', 344).
+reta('Bom Sucesso', 'Astorga', 53).
+reta('Itambe', 'Astorga', 57).
+reta('Cianorte', 'Astorga', 108).
 
 %Reta X -> Umuarama
 reta('Umuarama', 'Umuarama', 0).
 reta('Ponta Grossa', 'Umuarama', 353).
 reta('Curitiba', 'Umuarama', 450).
+reta('Bom Sucesso', 'Umuarama', 158).
+reta('Itambe', 'Umuarama', 136).
+reta('Cianorte', 'Umuarama', 73).
 
 %Reta X -> Ponta Grossa
 reta('Ponta Grossa', 'Ponta Grossa', 0).
 reta('Curitiba', 'Ponta Grossa', 97).
+reta('Bom Sucesso', 'Ponta Grossa', 225).
+reta('Itambe', 'Ponta Grossa', 245).
+reta('Cianorte', 'Ponta Grossa', 296).
 
 %Reta X -> Curitiba
 reta('Curitiba', 'Curitiba', 0).
+reta('Bom Sucesso', 'Curitiba', 317).
+reta('Itambe', 'Curitiba', 339).
+reta('Cianorte', 'Curitiba', 392).
+
+%Reta X -> Bom Sucesso
+reta('Bom Sucesso', 'Bom Sucesso', 0).
+reta('Itambe', 'Bom Sucesso', 23).
+reta('Cianorte', 'Bom Sucesso', 86).
+
+%Reta X -> Itambe
+reta('Itambe', 'Itambe', 0).
+reta('Cianorte', 'Itambe', 63).
+
+%Reta X -> Cianorte
+reta('Cianorte', 'Cianorte', 0).
 
 %%dados_via(cod, orig, dest, dist, caracter(piso, pedagio, velmedia)).
 dados_via(1, 'Mandaguari', 'Jandaia', 11, caracteristicas(4, 10, 80)).
@@ -265,7 +350,7 @@ dados_via(11, 'Maringa', 'Sarandi', 7, caracteristicas(3, 7, 65)).
 dados_via(12, 'Sarandi', 'Marialva', 10, caracteristicas(3, 10, 90)).
 dados_via(13, 'Marialva', 'Mandaguari', 11, caracteristicas(4, 8, 100)).
 dados_via(14, 'Apucarana', 'Ponta Grossa', 251, caracteristicas(2, 50, 70)).
-dados_via(15, 'Maringa', 'Umuarama', 165, caracteristicas(3, 40, 82)).
+dados_via(15, 'Maringa', 'Cianorte', 82, caracteristicas(3, 40, 82)).
 dados_via(16, 'Maringa', 'Campo Mourao', 91, caracteristicas(3, 10, 80)).
 dados_via(17, 'Campo Mourao', 'Toledo', 220, caracteristicas(3, 35, 88)).
 dados_via(18, 'Umuarama', 'Toledo', 130, caracteristicas(2, 22, 100)).
@@ -274,6 +359,13 @@ dados_via(20, 'Cascavel', 'Pato Branco', 234, caracteristicas(5, 50, 110)).
 dados_via(21, 'Pato Branco', 'Guarapuava', 187, caracteristicas(4, 27, 99)).
 dados_via(22, 'Guarapuava', 'Ponta Grossa', 163, caracteristicas(3, 15, 80)).
 dados_via(23, 'Ponta Grossa', 'Curitiba', 116, caracteristicas(4, 18, 85)).
+dados_via(24, 'Jandaia', 'Bom Sucesso', 24, caracteristicas(2, 10, 70)).
+dados_via(25, 'Itambe', 'Maringa', 42, caracteristicas(5, 18, 110)).
+dados_via(26, 'Itambe', 'Bom Sucesso', 23, caracteristicas(1, 30, 50)).
+dados_via(27, 'Cianorte', 'Umuarama', 88, caracteristicas(4, 27, 100)).
+dados_via(28, 'Cianorte', 'Itambe', 92, caracteristicas(3, 35, 80)).
+dados_via(28, 'Cianorte', 'Campo Mourao', 68, caracteristicas(5, 20, 105)).
+
 
 maior_velocidade(110).
 
