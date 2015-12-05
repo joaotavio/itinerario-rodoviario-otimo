@@ -459,3 +459,29 @@ salvarArquivo(Caminho, Conteudo) :-
 	write(Conteudo),
 	close(Arquivo),
 	set_output(Antigo).
+
+%---------------------------
+%  TESTES COM OS CRITERIOS
+%---------------------------
+
+:- use_module(library(plunit)).
+
+:- begin_tests(criterio_distancia).
+
+test(dist1) :- criterio_distancia('Mandaguari', 'Astorga', 1, ['Mandaguari', 'Marialva', 'Sarandi', 'Maringa', 'Astorga'], 80, 55).
+test(dist2, [fail]) :- criterio_distancia('Mandaguari', 'Curitiba', 2, ['Mandaguari', 'Jandaia', 'Cambira', 'Apucarana', 'Ponta Grossa', 'Curitiba'], 410, 102). %fail porque a qualidade deveria ser 1 para esse caminho, distancia e custo
+test(dist3, Caminho == ['Cascavel', 'Pato Branco', 'Guarapuava', 'Ponta Grossa']) :- criterio_distancia('Cascavel', 'Ponta Grossa', 3, Caminho, 584, 92).
+test(dist4, D == 55) :- criterio_distancia('Cambira', 'Maringa', 2,  ['Cambira', 'Jandaia', 'Mandaguari', 'Marialva', 'Sarandi', 'Maringa'], D, 47).
+test(dist5, C == 108, [fail]) :- criterio_distancia('Londrina', 'Ponta Grossa', 3, _, 305, C). %Custo = 238, ou qualidade menor
+
+:- end_tests(criterio_distancia).
+
+:- begin_tests(criterio_custo).
+test(custo1, [fail]) :- criterio_custo('Paranavai', 'Pato Branco', 3, ['Paranavai', 'Maringa', 'Umuarama', 'Toledo', 'Cascavel', 'Pato Branco'], 648, 151). %custo deveria ser menor que 3
+test(custo2, Caminho == ['Londrina', 'Cambe', 'Arapongas', 'Mandaguari', 'Marialva', 'Sarandi', 'Maringa', 'Campo Mourao', 'Toledo', 'Cascavel', 'Pato Branco', 'Guarapuava', 'Ponta Grossa']) :- criterio_custo('Londrina', 'Ponta Grossa', 3, Caminho, 1042, 238).
+test(custo3, C == 121) :- criterio_custo('Toledo', 'Cambe', 3, ['Toledo', 'Campo Mourao', 'Maringa', 'Sarandi', 'Marialva', 'Mandaguari', 'Arapongas', 'Cambe'], 400, C).
+test(custo4, D == 141) :- criterio_custo('Cambe', 'Astorga', 3,  _, D, 106).
+test(custo5) :- criterio_custo('Apucarana', 'Cambira', 1, ['Apucarana', 'Cambira'], _, _).
+test(custo6, [fail]) :- criterio_custo('Apucarana', 'Cambira', 2, ['Apucarana', 'Cambira'], _, _). %Caminho deveria ser Apuca->Arap->Mandag->Jandaia->Cambira
+
+:- end_tests(criterio_custo).
