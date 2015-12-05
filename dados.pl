@@ -368,6 +368,11 @@ dados_via(28, 'Cianorte', 'Campo Mourao', 68, caracteristicas(5, 20, 105)).
 
 
 maior_velocidade(110).
+menor_pedagio(7).
+
+%Quanto maior velocidade maior o consumo de gasolina
+consumo(Velocidade, Consumo) :-
+	Consumo is 1 + (Velocidade/100).
 
 listar_cidade(Lista) :-
 	setof(X, A^B^C^Y^dados_via(A, X, Y, B, C), Lista1),
@@ -384,10 +389,19 @@ heuristica_tempo(Origem, Destino, H) :-
 	heuristica_distancia(Origem, Destino, Reta),
 	H is Reta/MaiorVel.
 
+heuristica_custo(Origem, Destino, H) :-
+	menor_pedagio(MenorPedagio),
+	heuristica_distancia(Origem, Destino, Reta),
+	H is  MenorPedagio + 2*(Reta/20).
+
 heuristica(Origem, Destino, 'C1', H) :-
 	heuristica_distancia(Origem, Destino, H).
 heuristica(Origem, Destino, 'C2', H) :-
 	heuristica_tempo(Origem, Destino, H).
+heuristica(Origem, Destino, 'C3', H) :-
+	heuristica_custo(Origem, Destino, H).
+
+
 
 funcao_tempo(Origem, Destino, Tempo, Piso) :-
 	dados_via(_, Destino, Origem, Dist, caracteristicas(Piso, _, Vel)),
@@ -396,12 +410,26 @@ funcao_tempo(Origem, Destino, Tempo, Piso) :-
 	dados_via(_, Origem, Destino, Dist, caracteristicas(Piso, _, Vel)),
 	Tempo is Dist/Vel.
 
+funcao_custo(Origem, Destino, Custo, Piso) :-
+	dados_via(_, Destino, Origem, Dist, caracteristicas(Piso, Pedagio, Vel)),
+	consumo(Vel, Consumo),
+	Custo is Pedagio + 2*Consumo*(Dist/20).
+funcao_custo(Origem, Destino, Custo, Piso) :-
+	dados_via(_, Origem, Destino, Dist, caracteristicas(Piso, Pedagio, Vel)),
+	consumo(Vel, Consumo),
+	Custo is Pedagio + 2*Consumo*(Dist/20).
+
+
 funcaoG(Origem, Destino, 'C1', Piso, G) :-
 	retorna_distancia(Origem, Destino, G, Piso2),
 	Piso2 >= Piso.
 funcaoG(Origem, Destino, 'C2', Piso, G) :-
 	funcao_tempo(Origem, Destino, G, Piso2),
 	Piso2 >= Piso.
+funcaoG(Origem, Destino, 'C3', Piso, G) :-
+	funcao_custo(Origem, Destino, G, Piso2),
+	Piso2 >= Piso.
+
 
 
 retorna_distancia(A, B, D, Piso) :-
@@ -420,11 +448,14 @@ calc_dist_custo_tempo([A, B|Y], Dist, Custo, Tempo):-
 	Tempo is Tempo2 + TempoResto.
 
 retorna_dist_custo_tempo(A, B, Distancia, Custo, Tempo) :-
-	dados_via(_, A, B, Distancia, caracteristicas(_, Custo, Velocidade)),
+	dados_via(_, A, B, Distancia, caracteristicas(_, Pedagio, Velocidade)),
+	consumo(Velocidade, Consumo),
+	Custo is Pedagio + 2*Consumo*(Distancia/20),
 	Tempo is Distancia/Velocidade.
-
 retorna_dist_custo_tempo(A, B, Distancia, Custo, Tempo) :-
-	dados_via(_, B, A, Distancia, caracteristicas(_, Custo, Velocidade)),
+	dados_via(_, B, A, Distancia, caracteristicas(_, Pedagio, Velocidade)),
+	consumo(Velocidade, Consumo),
+	Custo is Pedagio + 2*Consumo*(Distancia/20),
 	Tempo is Distancia/Velocidade.
 
 pai(Cidade, [[Cidade, Custo, Pai] | _], [Cidade, Custo, Pai]) :- !.
@@ -436,6 +467,7 @@ reconstruirCaminho(Fechados, Vertice, [Cidade|Resto]) :-
 	pai(Pai, Fechados, PaiNovo),
 	reconstruirCaminho(Fechados, PaiNovo, Resto).
 
+
 encontrarCaminho(Origem, Destino, Piso, 'C1', Caminho, Distancia, Custo, Tempo) :-
 	criterioX(Origem, Destino, Piso, 'C1', Caminho, Distancia),
 	calc_dist_custo_tempo(Caminho, _, Custo, Tempo), !.
@@ -445,7 +477,7 @@ encontrarCaminho(Origem, Destino, Piso, 'C2', Caminho, Distancia, Custo, Tempo) 
 	calc_dist_custo_tempo(Caminho, Distancia, Custo, _), !.
 
 encontrarCaminho(Origem, Destino, Piso, 'C3', Caminho, Distancia, Custo, Tempo) :-
-	criterio_custo(Origem, Destino, Piso, Caminho, Custo),
+	criterioX(Origem, Destino, Piso, 'C3', Caminho, Custo),
 	calc_dist_custo_tempo(Caminho, Distancia, _, Tempo), !.
 
 
@@ -519,65 +551,6 @@ melhor_vertice([[Cidade1,Custo1|_],[Cidade2,Custo2|Resto2]|Resto], MelhorVertice
 	heuristica(Cidade2, Destino, Criterio, Heuristica2),
 	Heuristica1  + Custo1 > Heuristica2 +  Custo2,
 	melhor_vertice([[Cidade2,Custo2|Resto2]|Resto], MelhorVertice, Destino, Criterio).
-
-
-%ACHAR MENOR CUSTO
-min([X],X).
-min([X|Y],M):-
-	min(Y,N),
-	(X<N -> M=X; M=N).
-
-retorna_distancia(A, B, D) :-
-	dados_via(_, A, B, D, _).
-
-retorna_distancia(A, B, D) :-
-	dados_via(_, B, A, D, _).
-
-
-calc_dist([A, B], DistResto):- retorna_distancia(A, B, DistResto),!.
-calc_dist([A, B|Y], Dist):-
-	calc_dist([B|Y], DistResto),
-	retorna_distancia(A, B, Dist2),
-	Dist is Dist2 + DistResto.
-
-criterio_custo(Origem, Destino, _, Caminho, Custo) :-
-	Origem == Destino,
-	Caminho = [Origem],
-	Custo is 0, !.
-
-criterio_custo(Origem, Destino, Qualidade, Caminho, Custo) :-
-	caminho_custo(Origem, Destino, [], CaminhosPossiveis, [], CustosPossiveis, Qualidade),
-	min(CustosPossiveis, Custo),
-	nth0(Pos,CustosPossiveis,Custo),
-	nth0(Pos,CaminhosPossiveis,Caminho), !.
-
-caminho_custo(Origem, Destino, ListaCaminhos, Caminho, ListaCustos, Custo, QualidadePista) :-
-	travessia_custo(Origem, Destino, [Origem], CaminhoInvertido, CustoAux, QualidadePista),
-	reverse(CaminhoInvertido, CaminhoAux),
-	\+ member(CaminhoAux, ListaCaminhos),
-	\+ member(CustoAux, ListaCustos),
-	caminho_custo(Origem, Destino, [CaminhoAux | ListaCaminhos], Caminho, [CustoAux | ListaCustos], Custo, QualidadePista).
-
-
-caminho_custo(_, _, Caminho, Caminho, Custo, Custo, _).
-
-travessia_custo(Origem, Destino, Visitados, [Destino | Visitados], Custo1, QualidadePista) :-
-	escolhe_via(Origem, Destino, _, Custo1, QualidadePista).
-
-travessia_custo(Origem, Destino, Visitados, Caminho, Custo, QualidadePista) :-
-	escolhe_via(Origem, CidadeC, _, Custo2, QualidadePista),
-	CidadeC \= Destino,
-	\+ member(CidadeC, Visitados),
-	travessia_custo(CidadeC, Destino, [CidadeC|Visitados], Caminho, CustoResto, QualidadePista),
-	Custo is Custo2 + CustoResto.
-
-escolhe_via(A, B, D, Custo, Q) :-
-	dados_via(_, A, B, D, caracteristicas(Qlinha, Custo, _)),
-	Qlinha >= Q.
-
-escolhe_via(A, B, D, Custo, Q) :-
-	dados_via(_, B, A, D, caracteristicas(Qlinha, Custo, _)),
-	Qlinha >= Q.
 
 
 salvarArquivo(Caminho, Conteudo) :-

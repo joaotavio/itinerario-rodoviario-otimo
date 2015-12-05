@@ -2,6 +2,8 @@ package controle;
 
 import org.jpl7.*;
 
+import java.lang.Float;
+import java.lang.Integer;
 import java.util.ArrayList;
 
 public class Prolog {
@@ -104,8 +106,12 @@ public class Prolog {
             Term t = q.oneSolution().get("Caminho");
             caminho =  transformarEmCaminho(transformarEmLista(t));
             strDistancia = "\nDistância: " + q.oneSolution().get("Distancia").toString()+"km.";
-            strCusto = "\nCusto: R$" + q.oneSolution().get("Custo").toString()+".";
-            strTempo = "\nTempo: "+ q.oneSolution().get("Tempo").toString() + " horas";
+            float custo = Float.parseFloat(q.oneSolution().get("Custo").toString());
+            strCusto = "\nCusto: R$" + String.format("%.2f", custo)+".";
+            float tempo = Float.parseFloat(q.oneSolution().get("Tempo").toString());
+            int horas = (int) tempo;
+            int minutos = (int) (60 * (tempo - horas));
+            strTempo = "\nTempo: "+ horas + " horas e " + minutos + " minutos.";
             resposta += "Caminho: " + caminho + strDistancia + strCusto + strTempo;
         } else {
             resposta = "Não existe caminho com essas características.";
