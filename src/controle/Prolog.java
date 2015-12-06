@@ -10,7 +10,9 @@ public class Prolog {
 
     public boolean iniciar(){
         try {
-            Query q = new Query("consult('dados.pl')");
+            Query p = new Query("consult('rodovias.pl')");
+            Query q = new Query("consult('algoritmo.pl')");
+            p.hasSolution();
             q.hasSolution();
         } catch (JPLException e){
             return false;
@@ -36,8 +38,8 @@ public class Prolog {
             return false;
         }
         try {
-            Query q = new Query("consult('"+caminho+"')");
-            q.hasSolution();
+            Query p = new Query("consult('"+caminho+"')");
+            p.hasSolution();
         } catch (JPLException e){
             return false;
         }

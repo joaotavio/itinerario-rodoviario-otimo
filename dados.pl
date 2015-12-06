@@ -364,14 +364,14 @@ dados_via(25, 'Itambe', 'Maringa', 42, caracteristicas(5, 18, 110)).
 dados_via(26, 'Itambe', 'Bom Sucesso', 23, caracteristicas(1, 30, 50)).
 dados_via(27, 'Cianorte', 'Umuarama', 88, caracteristicas(4, 27, 100)).
 dados_via(28, 'Cianorte', 'Itambe', 92, caracteristicas(3, 35, 80)).
-dados_via(28, 'Cianorte', 'Campo Mourao', 68, caracteristicas(5, 20, 105)).
-dados_via(29, 'Guarapuava', 'Curitiba', 257, caracteristicas(3, 30, 76)).
-dados_via(30, 'Guarapuava', 'Cascavel', 246, caracteristicas(5, 35, 120)).
-dados_via(31, 'Umuarama', 'Campo Mourao', 108, caracteristicas(4, 15, 110)).
-dados_via(32, 'Mandaguari', 'Bom Sucesso', 31, caracteristicas(2, 15, 90)).
-dados_via(33, 'Londrina', 'Ponta Grossa', 272, caracteristicas(3, 40, 75)).
-dados_via(34, 'Londrina', 'Apucarana', 71, caracteristicas(3, 15, 100)).
-dados_via(35, 'Umuarama', 'Paranavai', 149, caracteristicas(1, 25, 90)).
+dados_via(29, 'Cianorte', 'Campo Mourao', 68, caracteristicas(5, 20, 105)).
+dados_via(30, 'Guarapuava', 'Curitiba', 257, caracteristicas(3, 30, 76)).
+dados_via(31, 'Guarapuava', 'Cascavel', 246, caracteristicas(5, 35, 120)).
+dados_via(32, 'Umuarama', 'Campo Mourao', 108, caracteristicas(4, 15, 110)).
+dados_via(33, 'Mandaguari', 'Bom Sucesso', 31, caracteristicas(2, 15, 90)).
+dados_via(34, 'Londrina', 'Ponta Grossa', 272, caracteristicas(3, 40, 75)).
+dados_via(35, 'Londrina', 'Apucarana', 71, caracteristicas(3, 15, 100)).
+dados_via(36, 'Umuarama', 'Paranavai', 149, caracteristicas(1, 25, 90)).
 
 maior_velocidade(120).
 menor_pedagio(7).
@@ -574,21 +574,29 @@ salvarArquivo(Caminho, Conteudo) :-
 :- use_module(library(plunit)).
 
 :- begin_tests(criterio_distancia).
-
-test(dist1) :- criterio_distancia('Mandaguari', 'Astorga', 1, ['Mandaguari', 'Marialva', 'Sarandi', 'Maringa', 'Astorga'], 80, 55).
-test(dist2, [fail]) :- criterio_distancia('Mandaguari', 'Curitiba', 2, ['Mandaguari', 'Jandaia', 'Cambira', 'Apucarana', 'Ponta Grossa', 'Curitiba'], 410, 102). %fail porque a qualidade deveria ser 1 para esse caminho, distancia e custo
-test(dist3, Caminho == ['Cascavel', 'Pato Branco', 'Guarapuava', 'Ponta Grossa']) :- criterio_distancia('Cascavel', 'Ponta Grossa', 3, Caminho, 584, 92).
-test(dist4, D == 55) :- criterio_distancia('Cambira', 'Maringa', 2,  ['Cambira', 'Jandaia', 'Mandaguari', 'Marialva', 'Sarandi', 'Maringa'], D, 47).
-test(dist5, C == 108, [fail]) :- criterio_distancia('Londrina', 'Ponta Grossa', 3, _, 305, C). %Custo = 238, ou qualidade menor
+%Iremos testar as distancias e caminhos
+test(dist1) :- encontrarCaminho('Mandaguari', 'Astorga', 1, 'C1', ['Mandaguari', 'Marialva', 'Sarandi', 'Maringa', 'Astorga'], 80, _, _).
+test(dist2, [fail]) :- encontrarCaminho('Mandaguari', 'Curitiba', 2, 'C1', ['Mandaguari', 'Jandaia', 'Cambira', 'Apucarana', 'Ponta Grossa', 'Curitiba'], 410, _, _). %fail porque a qualidade deveria ser 1 ou caminho por arapongas ate apucarana
+test(dist3, Caminho == ['Cascavel', 'Guarapuava', 'Ponta Grossa']) :- encontrarCaminho('Cascavel', 'Ponta Grossa', 3, 'C1', Caminho, 409, _, _).
+test(dist4, D == 55) :- encontrarCaminho('Cambira', 'Maringa', 2, 'C1',['Cambira', 'Jandaia', 'Mandaguari', 'Marialva', 'Sarandi', 'Maringa'], D, _, _).
+test(dist5, [fail]) :- encontrarCaminho('Londrina', 'Itambe', 3, 'C1', _, 128, 126.715,  _). %Custo = 238, ou qualidade menor
 
 :- end_tests(criterio_distancia).
+%Os tempos estarao em varias casas decimais por causa da media
+:- begin_tests(criterio_tempo).
+test(tempo1) :- encontrarCaminho('Sarandi', 'Curitiba', 2, 'C2', ['Sarandi', 'Marialva', 'Mandaguari', 'Arapongas', 'Apucarana', 'Ponta Grossa', 'Curitiba'], _, _, 5.84968253968254).
+test(tempo2, [fail]) :- encontrarCaminho('Arapongas', 'Pato Branco', 3, 'C2', _, 644, 330.5389999999999, 6.545054474249522). %Menor tempo para estrada de piso 2.
+test(tempo3, T == 1.9597222222222221) :- encontrarCaminho('Paranavai', 'Campo Mourao', 1, 'C2', ['Paranavai', 'Maringa', 'Campo Mourao'], 165, 62.44, T).
+
+:- end_tests(criterio_tempo).
+
 
 :- begin_tests(criterio_custo).
-test(custo1, [fail]) :- criterio_custo('Paranavai', 'Pato Branco', 3, ['Paranavai', 'Maringa', 'Umuarama', 'Toledo', 'Cascavel', 'Pato Branco'], 648, 151). %custo deveria ser menor que 3
-test(custo2, Caminho == ['Londrina', 'Cambe', 'Arapongas', 'Mandaguari', 'Marialva', 'Sarandi', 'Maringa', 'Campo Mourao', 'Toledo', 'Cascavel', 'Pato Branco', 'Guarapuava', 'Ponta Grossa']) :- criterio_custo('Londrina', 'Ponta Grossa', 3, Caminho, 1042, 238).
-test(custo3, C == 121) :- criterio_custo('Toledo', 'Cambe', 3, ['Toledo', 'Campo Mourao', 'Maringa', 'Sarandi', 'Marialva', 'Mandaguari', 'Arapongas', 'Cambe'], 400, C).
-test(custo4, D == 141) :- criterio_custo('Cambe', 'Astorga', 3,  _, D, 106).
-test(custo5) :- criterio_custo('Apucarana', 'Cambira', 1, ['Apucarana', 'Cambira'], _, _).
-test(custo6, [fail]) :- criterio_custo('Apucarana', 'Cambira', 2, ['Apucarana', 'Cambira'], _, _). %Caminho deveria ser Apuca->Arap->Mandag->Jandaia->Cambira
+test(custo1, [fail]) :- encontrarCaminho('Paranavai', 'Pato Branco', 3, 'C3', ['Paranavai', 'Umuarama', 'Toledo', 'Cascavel', 'Pato Branco'], 558, 226.22500000000002, 5.5565124933545995). %custo deveria ser menor que 3
+test(custo2, Caminho == ['Cambe', 'Arapongas', 'Mandaguari', 'Marialva', 'Sarandi', 'Maringa', 'Campo Mourao', 'Toledo']) :- encontrarCaminho('Cambe', 'Toledo', 3, 'C3', Caminho, _, 195.16, _).
+test(custo3, C == 145.05) :- encontrarCaminho('Umuarama', 'Apucarana', 3, 'C3',['Umuarama', 'Campo Mourao', 'Maringa', 'Sarandi', 'Marialva', 'Mandaguari', 'Arapongas', 'Apucarana'], 281, C, _).
+test(custo4, D == 69) :- encontrarCaminho('Marialva', 'Astorga', 3, 'C3', _, D, 60.455, _).
+test(custo5) :- encontrarCaminho('Apucarana', 'Cambira', 1, 'C3', ['Apucarana','Cambira'], _, _, _).
+test(custo6, [fail]) :- encontrarCaminho('Apucarana', 'Cambira', 2, 'C3',['Apucarana', 'Cambira'], _, _, _). %Caminho deveria ser Apuca->Arap->Mandag->Jandaia->Cambira
 
 :- end_tests(criterio_custo).
