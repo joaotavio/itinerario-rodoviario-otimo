@@ -215,7 +215,7 @@ test(base4) :- encontrarCaminho(X, Y, 2, 'C1', [X, Y], _, _, _).
 
 %caminho comeca com origem
 test(base5) :- encontrarCaminho(X, _, 1, 'C3', [X | _], _, _, _).
-test(base6, [fail]) :- encontrarCaminho(X, _, 1, 'C3', [_, X | _], _, _, _).
+test(base6, [fail]) :- encontrarCaminho(X, _, 1, 'C3', [_, X | _], _, _, _). %Simboliza que tem alguem antes da origem
 
 
 
