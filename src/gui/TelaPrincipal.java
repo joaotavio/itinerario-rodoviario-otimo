@@ -33,7 +33,6 @@ public class TelaPrincipal extends JFrame {
     private JMenu arquivo;
     private JMenu ajuda;
     private JMenuItem abrirArquivo;
-    private JMenuItem rodarTestes;
     private JMenuItem sair;
     private JMenuItem sobre;
 
@@ -104,17 +103,14 @@ public class TelaPrincipal extends JFrame {
         menubar.add(ajuda);
 
         abrirArquivo = new JMenuItem("Abrir arquivo");
-        rodarTestes = new JMenuItem("Rodar testes");
         sair = new JMenuItem("Sair");
         sobre = new JMenuItem("Sobre");
 
         arquivo.add(abrirArquivo);
-        arquivo.add(rodarTestes);
         arquivo.addSeparator();
         arquivo.add(sair);
         ajuda.add(sobre);
 
-        rodarTestes.addActionListener(new AcaoItemMenuRodarTestes());
         abrirArquivo.addActionListener(new AcaoItemMenuAbrirArquivo());
         sair.addActionListener(new AcaoItemMenuSair());
         sobre.addActionListener(new TelaSobre(this));
@@ -169,13 +165,6 @@ public class TelaPrincipal extends JFrame {
                     }
                 }
             }
-        }
-    }
-
-    private class AcaoItemMenuRodarTestes implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
         }
     }
 

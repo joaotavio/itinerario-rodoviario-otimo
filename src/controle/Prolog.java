@@ -3,15 +3,14 @@ package controle;
 import org.jpl7.*;
 
 import java.lang.Float;
-import java.lang.Integer;
 import java.util.ArrayList;
 
 public class Prolog {
 
     public boolean iniciar(){
         try {
-            Query p = new Query("consult('rodovias.pl')");
-            Query q = new Query("consult('algoritmo.pl')");
+            Query p = new Query("consult('src/prolog/rodovias.pl')");
+            Query q = new Query("consult('src/prolog/algoritmo.pl')");
             p.hasSolution();
             q.hasSolution();
         } catch (JPLException e){

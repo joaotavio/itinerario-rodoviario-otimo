@@ -1,5 +1,3 @@
-maior_velocidade(120).
-menor_pedagio(7).
 
 %Quanto maior velocidade maior o consumo de gasolina
 consumo(Velocidade, Consumo) :-
